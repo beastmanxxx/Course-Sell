@@ -895,19 +895,161 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Course page function
-function openCoursePage(courseId) {
-    // Find the course from allCourses (global variable)
+// Replace openCoursePage and Buy Now logic with modal-based purchase flow
+window.openCoursePage = function(courseId) {
     const course = (window.allCourses || []).find(c => c.id === courseId);
-    if (course) {
-        localStorage.setItem('selectedCourse', JSON.stringify(course));
-    }
-    if (!currentUser) {
-        openAuthModal();
+    if (!course) return;
+    showPurchaseModal(course);
+};
+
+function showPurchaseModal(course) {
+    const modal = document.getElementById('purchaseModal');
+    const amountInput = document.getElementById('modalAmount');
+    const upiInput = document.getElementById('modalUpiId');
+    const screenshotInput = document.getElementById('modalPaymentScreenshot');
+    const errorMsg = document.getElementById('modalErrorMsg');
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    let imageIsOldEnough = false;
+    // Reset form
+    amountInput.value = course.price || '';
+    upiInput.value = '';
+    screenshotInput.value = '';
+    errorMsg.textContent = '';
+    submitBtn.disabled = false;
+    // Show modal
+    modal.style.display = 'flex';
+    // Close modal handler
+    document.getElementById('closePurchaseModal').onclick = () => {
+        modal.style.display = 'none';
+    };
+    // Image age check
+    screenshotInput.onchange = function() {
+        errorMsg.textContent = '';
+        imageIsOldEnough = false;
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            const now = Date.now();
+            const lastModified = file.lastModified;
+            const ageSeconds = (now - lastModified) / 1000;
+            if (ageSeconds < 90) {
+                errorMsg.textContent = 'The payment screenshot must be at least 1.5 minutes (90 seconds) old. Please wait before uploading.';
+                submitBtn.disabled = true;
+            } else {
+                errorMsg.textContent = '';
+                submitBtn.disabled = false;
+                imageIsOldEnough = true;
+            }
+        }
+    };
+    // Submit handler
+    document.getElementById('purchaseFormModal').onsubmit = function(e) {
+        e.preventDefault();
+        if (!imageIsOldEnough) {
+            errorMsg.textContent = 'The payment screenshot must be at least 1.5 minutes (90 seconds) old.';
+            return;
+        }
+        // Add to user's My Courses (pending)
+        addCourseToMyCourses(course, 'pending');
+        // Add to admin requests
+        addPurchaseRequest(course, currentUser ? currentUser.uid : 'demo-user', {
+            amount: amountInput.value,
+            upiId: upiInput.value,
+            // Not storing image in demo, just a placeholder
+            screenshot: screenshotInput.value
+        });
+        modal.style.display = 'none';
+        alert('Purchase request submitted!');
+    };
+}
+
+// Add course to user's My Courses with status
+function addCourseToMyCourses(course, status) {
+    // For demo, store in localStorage
+    let myCourses = JSON.parse(localStorage.getItem('myCourses') || '[]');
+    myCourses = myCourses.filter(c => c.id !== course.id); // Remove duplicates
+    myCourses.push({ ...course, status });
+    localStorage.setItem('myCourses', JSON.stringify(myCourses));
+    // Optionally update UI if My Courses section is visible
+    if (typeof showMyCourses === 'function') showMyCourses();
+}
+
+// Add purchase request to admin panel
+function addPurchaseRequest(course, userId, paymentInfo) {
+    let requests = JSON.parse(localStorage.getItem('purchaseRequests') || '[]');
+    requests.push({
+        id: `${userId}_${course.id}_${Date.now()}`,
+        userId,
+        courseId: course.id,
+        courseTitle: course.title,
+        paymentInfo,
+        status: 'pending'
+    });
+    localStorage.setItem('purchaseRequests', JSON.stringify(requests));
+    // Optionally update UI if Requests tab is visible
+    if (typeof showAdminRequests === 'function') showAdminRequests();
+}
+
+// Show admin requests in Requests tab
+function showAdminRequests() {
+    const container = document.getElementById('requestsTableContainer');
+    if (!container) return;
+    let requests = JSON.parse(localStorage.getItem('purchaseRequests') || '[]');
+    if (requests.length === 0) {
+        container.innerHTML = '<p>No purchase requests.</p>';
         return;
     }
-    window.location.href = `course-purchase.html`;
+    container.innerHTML = `<table class="users-table"><thead><tr><th>User</th><th>Course</th><th>Amount</th><th>UPI ID</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+        ${requests.map(r => `
+            <tr>
+                <td>${r.userId}</td>
+                <td>${r.courseTitle}</td>
+                <td>${r.paymentInfo.amount}</td>
+                <td>${r.paymentInfo.upiId}</td>
+                <td>${r.status}</td>
+                <td>
+                    <button onclick="approveRequest('${r.id}')">Approve</button>
+                    <button onclick="rejectRequest('${r.id}')">Reject</button>
+                </td>
+            </tr>
+        `).join('')}
+    </tbody></table>`;
 }
+
+// Approve/reject handlers
+window.approveRequest = function(requestId) {
+    let requests = JSON.parse(localStorage.getItem('purchaseRequests') || '[]');
+    const req = requests.find(r => r.id === requestId);
+    if (!req) return;
+    // Update user course status
+    let myCourses = JSON.parse(localStorage.getItem('myCourses') || '[]');
+    myCourses = myCourses.map(c => c.id === req.courseId ? { ...c, status: 'completed' } : c);
+    localStorage.setItem('myCourses', JSON.stringify(myCourses));
+    // Remove request
+    requests = requests.filter(r => r.id !== requestId);
+    localStorage.setItem('purchaseRequests', JSON.stringify(requests));
+    showAdminRequests();
+    if (typeof showMyCourses === 'function') showMyCourses();
+};
+window.rejectRequest = function(requestId) {
+    let requests = JSON.parse(localStorage.getItem('purchaseRequests') || '[]');
+    const req = requests.find(r => r.id === requestId);
+    if (!req) return;
+    // Remove course from user's My Courses
+    let myCourses = JSON.parse(localStorage.getItem('myCourses') || '[]');
+    myCourses = myCourses.filter(c => c.id !== req.courseId);
+    localStorage.setItem('myCourses', JSON.stringify(myCourses));
+    // Remove request
+    requests = requests.filter(r => r.id !== requestId);
+    localStorage.setItem('purchaseRequests', JSON.stringify(requests));
+    showAdminRequests();
+    if (typeof showMyCourses === 'function') showMyCourses();
+};
+
+// Show My Courses section with status
+window.showMyCourses = function() {
+    // Implement UI update for user's My Courses section if needed
+    // Example: render a table or cards with course info and status
+};
 
 // Mobile menu toggle
 function toggleMobileMenu() {
