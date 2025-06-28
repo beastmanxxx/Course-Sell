@@ -104,7 +104,7 @@
             <div class="admin-tabs">
                 <button class="admin-tab-btn active" onclick="switchAdminTab('users')">Users</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab('courses')">Courses</button>
-                <button class="admin-tab-btn" onclick="switchAdminTab('analytics')">Analytics</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('requests')">Requests</button>
             </div>
             
             <div class="admin-tab-content" id="usersTab">
@@ -206,10 +206,12 @@
                 </div>
             </div>
             
-            <div class="admin-tab-content" id="analyticsTab" style="display: none;">
+            <div class="admin-tab-content" id="requestsTab" style="display: none;">
                 <div class="admin-section">
-                    <h3>Analytics Dashboard</h3>
-                    <p>Analytics features coming soon...</p>
+                    <h3>Purchase Requests</h3>
+                    <div id="requestsTableContainer">
+                        <!-- Requests will be loaded here -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -352,6 +354,26 @@
             <p>&copy; 2024 Trade Mastery. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Purchase Modal -->
+    <div id="purchaseModal" class="purchase-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+      <div style="background:#fff; border-radius:12px; max-width:400px; width:95%; margin:auto; padding:2rem; position:relative;">
+        <button id="closePurchaseModal" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <div style="text-align:center; margin-bottom:1rem;">
+          <img src="qr.png" alt="QR Code" style="width:120px; height:120px; margin-bottom:1rem;">
+        </div>
+        <form id="purchaseFormModal">
+          <label for="modalAmount">Amount (₹)</label>
+          <input type="number" id="modalAmount" name="amount" required min="1" style="width:100%; margin-bottom:1rem;">
+          <label for="modalUpiId">Your UPI ID</label>
+          <input type="text" id="modalUpiId" name="upiId" required placeholder="example@upi" style="width:100%; margin-bottom:1rem;">
+          <label for="modalPaymentScreenshot">Payment Screenshot</label>
+          <input type="file" id="modalPaymentScreenshot" name="paymentScreenshot" accept="image/*" required style="width:100%; margin-bottom:1rem;">
+          <div class="error-msg" id="modalErrorMsg" style="color:#e74c3c; font-weight:600; margin-bottom:1rem;"></div>
+          <button type="submit" class="submit-btn" id="modalSubmitBtn" style="width:100%; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:0.75rem; font-size:1.1rem; cursor:pointer;">Submit Purchase</button>
+        </form>
+      </div>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="firebaseConfig.js"></script>
