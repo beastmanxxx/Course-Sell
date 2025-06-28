@@ -47,7 +47,7 @@
         }
         return course;
     }
-    // Render course card (same as main page)
+    // Render course card (main page style)
     function renderCourseCard(course) {
         const embeddedVideoUrl = (function(url) {
             if (!url) return '';
@@ -64,7 +64,7 @@
             return url;
         })(course.videoLink);
         return `
-        <div class="course-card" style="margin-bottom:2rem;">
+        <div class="course-card" style="margin-bottom:2rem; box-shadow:0 2px 16px rgba(0,0,0,0.08);">
             <div class="course-video-container">
                 ${embeddedVideoUrl ? 
                     `<iframe 
@@ -82,7 +82,12 @@
                 }
             </div>
             <div class="course-content">
-                <h3>${course.title}</h3>
+                <div class="course-info-cell">
+                    <img src="${course.imageLink || 'https://via.placeholder.com/48x32'}" alt="Course" class="course-thumbnail">
+                    <div>
+                        <div class="course-title">${course.title}</div>
+                    </div>
+                </div>
                 <p>${course.description}</p>
                 <span class="price">₹${course.price}</span>
             </div>
