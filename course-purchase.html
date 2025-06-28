@@ -6,58 +6,36 @@
     <title>Purchase Course</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .purchase-container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); padding: 2rem; }
-        .purchase-header { display: flex; align-items: center; gap: 1.5rem; }
-        .purchase-header img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; }
-        .purchase-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .purchase-desc { color: #555; margin-bottom: 1rem; }
-        .purchase-video { width: 100%; height: 320px; margin-bottom: 1rem; border-radius: 8px; }
-        .qr-section { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; }
-        .qr-section img { width: 120px; height: 120px; }
+        .purchase-container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); padding: 2rem; }
         .purchase-form label { font-weight: 600; margin-top: 1rem; display: block; }
         .purchase-form input[type="text"], .purchase-form input[type="number"] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1rem; }
         .purchase-form input[type="file"] { margin-bottom: 1rem; }
-        .timer { color: #e74c3c; font-weight: 600; margin-bottom: 1rem; }
         .submit-btn { background: #ff6b6b; color: #fff; border: none; padding: 0.75rem 2rem; border-radius: 6px; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; }
         .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .error-msg { color: #e74c3c; font-weight: 600; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
     <div class="purchase-container">
-        <div class="purchase-header">
-            <img id="courseImage" src="" alt="Course Image">
-            <div>
-                <div class="purchase-title" id="courseTitle"></div>
-                <div class="purchase-desc" id="courseDescription"></div>
-                <div class="purchase-price" id="coursePrice"></div>
-            </div>
-        </div>
-        <iframe id="courseVideo" class="purchase-video" src="" frameborder="0" allowfullscreen></iframe>
+        <div id="courseCardContainer"></div>
         <form class="purchase-form" id="purchaseForm">
-            <div class="qr-section">
-                <img src="qr.png" alt="QR Code">
-                <div>
-                    <label for="amount">Amount (₹)</label>
-                    <input type="number" id="amount" name="amount" required min="1">
-                    <label for="upiId">Your UPI ID</label>
-                    <input type="text" id="upiId" name="upiId" required placeholder="example@upi">
-                </div>
-            </div>
-            <div class="timer" id="timer">Please wait 1:30 before uploading payment screenshot...</div>
+            <label for="amount">Amount (₹)</label>
+            <input type="number" id="amount" name="amount" required min="1">
+            <label for="upiId">Your UPI ID</label>
+            <input type="text" id="upiId" name="upiId" required placeholder="example@upi">
             <label for="paymentScreenshot">Payment Screenshot</label>
-            <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*" disabled required>
-            <button type="submit" class="submit-btn" id="submitBtn" disabled>Submit Purchase</button>
+            <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*" required>
+            <div class="error-msg" id="errorMsg"></div>
+            <button type="submit" class="submit-btn" id="submitBtn">Submit Purchase</button>
         </form>
     </div>
     <script>
     // Helper to get course data from localStorage or URL params
     function getCourseData() {
         let course = null;
-        // Try localStorage first
         if (localStorage.getItem('selectedCourse')) {
             course = JSON.parse(localStorage.getItem('selectedCourse'));
         } else {
-            // Fallback: try URL params
             const params = new URLSearchParams(window.location.search);
             course = {
                 title: params.get('title'),
@@ -69,15 +47,9 @@
         }
         return course;
     }
-    // Populate course details
-    const course = getCourseData();
-    if (course) {
-        document.getElementById('courseTitle').textContent = course.title || '';
-        document.getElementById('courseDescription').textContent = course.description || '';
-        document.getElementById('coursePrice').textContent = course.price ? `Price: ₹${course.price}` : '';
-        document.getElementById('courseImage').src = course.imageLink || 'https://via.placeholder.com/120x80';
-        // Embed video
-        function getEmbeddedVideoUrl(url) {
+    // Render course card (same as main page)
+    function renderCourseCard(course) {
+        const embeddedVideoUrl = (function(url) {
             if (!url) return '';
             if (url.includes('youtube.com') || url.includes('youtu.be')) {
                 let videoId = '';
@@ -90,33 +62,67 @@
                 return `https://www.youtube.com/embed/${videoId}`;
             }
             return url;
-        }
-        document.getElementById('courseVideo').src = getEmbeddedVideoUrl(course.videoLink);
+        })(course.videoLink);
+        return `
+        <div class="course-card" style="margin-bottom:2rem;">
+            <div class="course-video-container">
+                ${embeddedVideoUrl ? 
+                    `<iframe 
+                        src="${embeddedVideoUrl}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        class="course-video"
+                        title="${course.title} Preview">
+                    </iframe>` :
+                    `<div class="course-video-placeholder">
+                        <i class='fas fa-play-circle'></i>
+                        <p>Video Preview</p>
+                    </div>`
+                }
+            </div>
+            <div class="course-content">
+                <h3>${course.title}</h3>
+                <p>${course.description}</p>
+                <span class="price">₹${course.price}</span>
+            </div>
+        </div>
+        `;
     }
-    // Timer logic for screenshot upload and submit button
-    let timer = 90;
-    const timerEl = document.getElementById('timer');
+    const course = getCourseData();
+    if (course) {
+        document.getElementById('courseCardContainer').innerHTML = renderCourseCard(course);
+    }
+    // Image age check
     const screenshotInput = document.getElementById('paymentScreenshot');
+    const errorMsg = document.getElementById('errorMsg');
     const submitBtn = document.getElementById('submitBtn');
-    function updateTimer() {
-        if (timer > 0) {
-            const min = Math.floor(timer / 60);
-            const sec = timer % 60;
-            timerEl.textContent = `Please wait ${min}:${sec.toString().padStart(2, '0')} before uploading payment screenshot...`;
-            timer--;
-        } else {
-            timerEl.textContent = '';
-            screenshotInput.disabled = false;
-            submitBtn.disabled = false;
+    let imageIsOldEnough = false;
+    screenshotInput.addEventListener('change', function(e) {
+        errorMsg.textContent = '';
+        imageIsOldEnough = false;
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            const now = Date.now();
+            const lastModified = file.lastModified;
+            const ageSeconds = (now - lastModified) / 1000;
+            if (ageSeconds < 90) {
+                errorMsg.textContent = 'The payment screenshot must be at least 1.5 minutes (90 seconds) old. Please wait before uploading.';
+                submitBtn.disabled = true;
+            } else {
+                errorMsg.textContent = '';
+                submitBtn.disabled = false;
+                imageIsOldEnough = true;
+            }
         }
-    }
-    updateTimer();
-    const interval = setInterval(() => {
-        updateTimer();
-        if (timer <= 0) clearInterval(interval);
-    }, 1000);
-    // Prevent form submit for now (will add logic later)
+    });
     document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+        if (!imageIsOldEnough) {
+            e.preventDefault();
+            errorMsg.textContent = 'The payment screenshot must be at least 1.5 minutes (90 seconds) old.';
+            return;
+        }
+        // TODO: Implement purchase request logic
         e.preventDefault();
         alert('Purchase request submitted! (Functionality to be implemented)');
     });
