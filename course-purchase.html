@@ -3,118 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Purchase - Gyanibaba</title>
+    <title>Purchase Course</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .purchase-container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); padding: 2rem; }
+        .purchase-header { display: flex; align-items: center; gap: 1.5rem; }
+        .purchase-header img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; }
+        .purchase-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .purchase-desc { color: #555; margin-bottom: 1rem; }
+        .purchase-video { width: 100%; height: 320px; margin-bottom: 1rem; border-radius: 8px; }
+        .qr-section { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1rem; }
+        .qr-section img { width: 120px; height: 120px; }
+        .purchase-form label { font-weight: 600; margin-top: 1rem; display: block; }
+        .purchase-form input[type="text"], .purchase-form input[type="number"] { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1rem; }
+        .purchase-form input[type="file"] { margin-bottom: 1rem; }
+        .timer { color: #e74c3c; font-weight: 600; margin-bottom: 1rem; }
+        .submit-btn { background: #ff6b6b; color: #fff; border: none; padding: 0.75rem 2rem; border-radius: 6px; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
-    <nav class="navbar">
-        <div class="logo">Gyanibaba</div>
-        <div class="nav-links">
-            <a href="index.html#home">Home</a>
-            <a href="index.html#courses">Courses</a>
-            <a href="index.html#features">Features</a>
-            <a href="index.html#testimonials">Testimonials</a>
-            <a href="index.html#contact">Contact</a>
-        </div>
-        <button class="login-btn" onclick="openAuthModal()">Login/Register</button>
-    </nav>
-
-    <div class="course-purchase-container">
-        <div class="course-purchase-content">
-            <div class="course-purchase-image" data-aos="fade-right">
-                <img id="courseImage" src="" alt="Course Image">
-            </div>
-            <div class="course-purchase-details" data-aos="fade-left">
-                <h1 id="courseTitle"></h1>
-                <p id="courseDescription"></p>
-                <div class="course-features">
-                    <div class="feature">
-                        <i class="fas fa-clock"></i>
-                        <span id="courseDuration"></span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-video"></i>
-                        <span id="courseVideos"></span>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-certificate"></i>
-                        <span>Certificate Included</span>
-                    </div>
-                </div>
-                <div class="course-price">
-                    <span id="coursePrice"></span>
-                </div>
-                <button class="confirm-buy-btn" onclick="redirectToWhatsApp()">
-                    <i class="fab fa-whatsapp"></i> Confirm Purchase
-                </button>
+    <div class="purchase-container">
+        <div class="purchase-header">
+            <img id="courseImage" src="" alt="Course Image">
+            <div>
+                <div class="purchase-title" id="courseTitle"></div>
+                <div class="purchase-desc" id="courseDescription"></div>
+                <div class="purchase-price" id="coursePrice"></div>
             </div>
         </div>
+        <iframe id="courseVideo" class="purchase-video" src="" frameborder="0" allowfullscreen></iframe>
+        <form class="purchase-form" id="purchaseForm">
+            <div class="qr-section">
+                <img src="qr.png" alt="QR Code">
+                <div>
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" name="amount" required min="1">
+                    <label for="upiId">Your UPI ID</label>
+                    <input type="text" id="upiId" name="upiId" required placeholder="example@upi">
+                </div>
+            </div>
+            <div class="timer" id="timer">Please wait 1:30 before uploading payment screenshot...</div>
+            <label for="paymentScreenshot">Payment Screenshot</label>
+            <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*" disabled required>
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>Submit Purchase</button>
+        </form>
     </div>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
-
-        // Course data
-        const courses = {
-            'web-development': {
-                title: 'Web Development Masterclass',
-                description: 'Master modern web technologies including HTML5, CSS3, JavaScript, React, and Node.js. Build real-world projects and become a full-stack developer.',
-                duration: '6 Months',
-                videos: '120+ Videos',
-                price: '$99',
-                image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
-            },
-            'data-science': {
-                title: 'Data Science & Machine Learning',
-                description: 'Learn data analysis, machine learning, and artificial intelligence. Master Python, R, and essential data science tools.',
-                duration: '8 Months',
-                videos: '150+ Videos',
-                price: '$129',
-                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-            },
-            'digital-marketing': {
-                title: 'Digital Marketing Pro',
-                description: 'Master SEO, social media marketing, content marketing, and analytics. Learn to create effective digital marketing strategies.',
-                duration: '4 Months',
-                videos: '80+ Videos',
-                price: '$79',
-                image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+    // Helper to get course data from localStorage or URL params
+    function getCourseData() {
+        let course = null;
+        // Try localStorage first
+        if (localStorage.getItem('selectedCourse')) {
+            course = JSON.parse(localStorage.getItem('selectedCourse'));
+        } else {
+            // Fallback: try URL params
+            const params = new URLSearchParams(window.location.search);
+            course = {
+                title: params.get('title'),
+                description: params.get('description'),
+                price: params.get('price'),
+                videoLink: params.get('videoLink'),
+                imageLink: params.get('imageLink')
+            };
+        }
+        return course;
+    }
+    // Populate course details
+    const course = getCourseData();
+    if (course) {
+        document.getElementById('courseTitle').textContent = course.title || '';
+        document.getElementById('courseDescription').textContent = course.description || '';
+        document.getElementById('coursePrice').textContent = course.price ? `Price: ₹${course.price}` : '';
+        document.getElementById('courseImage').src = course.imageLink || 'https://via.placeholder.com/120x80';
+        // Embed video
+        function getEmbeddedVideoUrl(url) {
+            if (!url) return '';
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = '';
+                if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1];
+                } else {
+                    const params = new URLSearchParams(url.split('?')[1]);
+                    videoId = params.get('v');
+                }
+                return `https://www.youtube.com/embed/${videoId}`;
             }
-        };
-
-        // Get course ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseId = urlParams.get('course');
-
-        // Update page content
-        if (courseId && courses[courseId]) {
-            const course = courses[courseId];
-            document.getElementById('courseTitle').textContent = course.title;
-            document.getElementById('courseDescription').textContent = course.description;
-            document.getElementById('courseDuration').textContent = course.duration;
-            document.getElementById('courseVideos').textContent = course.videos;
-            document.getElementById('coursePrice').textContent = course.price;
-            document.getElementById('courseImage').src = course.image;
-            document.title = `${course.title} - Gyanibaba`;
+            return url;
         }
-
-        function redirectToWhatsApp() {
-            const course = courses[courseId];
-            const message = `Hello! I'm interested in purchasing the ${course.title} course for ${course.price}.`;
-            const whatsappUrl = `https://wa.me/918979873681?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+        document.getElementById('courseVideo').src = getEmbeddedVideoUrl(course.videoLink);
+    }
+    // Timer logic for screenshot upload and submit button
+    let timer = 90;
+    const timerEl = document.getElementById('timer');
+    const screenshotInput = document.getElementById('paymentScreenshot');
+    const submitBtn = document.getElementById('submitBtn');
+    function updateTimer() {
+        if (timer > 0) {
+            const min = Math.floor(timer / 60);
+            const sec = timer % 60;
+            timerEl.textContent = `Please wait ${min}:${sec.toString().padStart(2, '0')} before uploading payment screenshot...`;
+            timer--;
+        } else {
+            timerEl.textContent = '';
+            screenshotInput.disabled = false;
+            submitBtn.disabled = false;
         }
+    }
+    updateTimer();
+    const interval = setInterval(() => {
+        updateTimer();
+        if (timer <= 0) clearInterval(interval);
+    }, 1000);
+    // Prevent form submit for now (will add logic later)
+    document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Purchase request submitted! (Functionality to be implemented)');
+    });
     </script>
 </body>
 </html> 
