@@ -897,11 +897,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Course page function
 function openCoursePage(courseId) {
+    // Find the course from allCourses (global variable)
+    const course = (window.allCourses || []).find(c => c.id === courseId);
+    if (course) {
+        localStorage.setItem('selectedCourse', JSON.stringify(course));
+    }
     if (!currentUser) {
         openAuthModal();
         return;
     }
-    window.location.href = `course-purchase.html?course=${courseId}`;
+    window.location.href = `course-purchase.html`;
 }
 
 // Mobile menu toggle
