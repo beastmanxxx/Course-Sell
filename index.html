@@ -4,67 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trade Mastery - Learn & Grow</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS for Animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- All CSS has been embedded here -->
     <style>
-        /* Custom Cursor */
-        .cursor {
-            width: 10px;
-            height: 10px;
-            background: #ff6b6b;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.2s ease;
-        }
-
-        .cursor-follower {
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 107, 107, 0.3);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.6s ease, width 0.3s ease, height 0.3s ease;
-        }
-
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
             --heading-font: 'Outfit', sans-serif;
             --body-font: 'Plus Jakarta Sans', sans-serif;
+            --primary-color: #ff6b6b;
+            --secondary-color: #ff5252;
+            --dark-color: #2d3436;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --text-color: #636e72;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --danger-color: #dc3545;
         }
 
+        /* Global Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--light-gray);
+            color: var(--dark-color);
             line-height: 1.6;
             font-family: var(--body-font);
         }
-
-        /* Typography Styles */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--heading-font);
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        h1, h2, h3, h4 { font-family: var(--heading-font); font-weight: 700; line-height: 1.2; }
+        
         /* Navbar */
         .navbar {
             position: fixed;
@@ -78,1660 +56,786 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, padding 0.3s ease, background 0.3s ease;
-            font-family: var(--heading-font);
-        }
-        
-        .navbar.scrolled {
-            padding: 1rem 5%;
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ff6b6b;
-            text-decoration: none;
-            letter-spacing: -0.03em;
-        }
-
-        .nav-links a {
-            margin: 0 1.5rem;
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ff6b6b;
-        }
-
-        .nav-buttons {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .admin-btn {
-            padding: 0.8rem;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            font-size: 1rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
         }
-        
-        .admin-btn:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
-        }
-        
-        .login-btn {
-            padding: 0.8rem 1.5rem;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .login-btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-        }
+        .navbar.scrolled { padding: 1rem 5%; background: rgba(255, 255, 255, 0.98); }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .nav-links a { margin: 0 1.5rem; text-decoration: none; color: var(--dark-color); font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .nav-buttons { display: flex; align-items: center; gap: 1rem; }
+        .login-btn, .admin-btn { padding: 0.8rem 1.5rem; color: white; border: none; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .login-btn { background: var(--primary-color); } .login-btn:hover { background: var(--secondary-color); transform: translateY(-2px); }
+        .admin-btn { display: none; background: #6c757d; width: 45px; height: 45px; border-radius: 50%; padding: 0.8rem;}
 
         /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 5% 5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-
-        .hero-content {
-            flex: 1;
-            padding-right: 2rem;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #2d3436;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: #636e72;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .cta-button {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-family: var(--heading-font);
-            font-weight: 600;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transform: perspective(1000px) rotateY(-5deg);
-            transition: transform 0.5s ease;
-        }
-
-        .hero-image img:hover {
-            transform: perspective(1000px) rotateY(0deg);
-        }
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 5% 5rem; background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%); }
+        .hero-content { flex: 1; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
+        .hero-content p { font-size: 1.2rem; color: var(--text-color); margin-bottom: 2rem; }
+        .cta-button { padding: 1rem 2rem; font-size: 1.1rem; background: var(--primary-color); color: white; border: none; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4); }
+        .hero-image { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .hero-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
 
         /* Courses Section */
-        .courses {
-            padding: 5rem 5%;
-            background: white;
-        }
+        .courses { padding: 5rem 5%; background: white; }
+        .courses h2 { text-align: center; font-size: 2.5rem; margin-bottom: 1rem; }
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .course-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07); transition: transform 0.3s ease; position: relative; }
+        .course-card:hover { transform: translateY(-10px); }
+        .course-video-container { position: relative; width: 100%; height: 200px; background: #000; display: flex; align-items: center; justify-content: center; }
+        .course-video { width: 100%; height: 100%; border: none; }
+        .course-video-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .course-video-placeholder i { font-size: 3rem; opacity: 0.8; }
+        .course-content { padding: 1.5rem; }
+        .course-content h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .course-content p { color: var(--text-color); margin-bottom: 1rem; min-height: 48px; }
+        .price { display: block; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem; }
+        .buy-btn { width: 100%; padding: 0.8rem; font-size: 1rem; }
+        .new-course-badge { position: absolute; top: 10px; right: 10px; background: var(--primary-color); color: white; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 15px; z-index: 10; }
 
-        .courses h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2d3436;
-        }
-        
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .course-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-        
-        .course-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .course-content {
-            padding: 1.5rem;
-        }
-
-        .course-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #2d3436;
-        }
-
-        .course-content p {
-            color: #636e72;
-            margin-bottom: 1rem;
-            font-weight: 500;
-            min-height: 48px; 
-        }
-
-        .price {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-            font-family: var(--heading-font);
-        }
-
-        .course-actions {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
-
-        .buy-btn {
-            flex: 1;
-            padding: 0.8rem 1.5rem;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: var(--heading-font);
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .buy-btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 5rem 5%;
-            background: #f8f9fa;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2d3436;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-card i {
-            font-size: 2.5rem;
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 5rem 5%;
-            background: white;
-        }
-
-        .testimonials h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2d3436;
-        }
-
-        .testimonial-slider {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .testimonial-content p {
-            font-size: 1.1rem;
-            color: #2d3436;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .student-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .student-info img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #2d3436;
-            color: white;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #ff6b6b;
-        }
-
-        .footer-section a {
-            display: block;
-            color: #dfe6e9;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #ff6b6b;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: #ff6b6b;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in { animation: fadeIn 1s ease forwards; }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        /* Modal Base Styles */
-        .auth-modal, .admin-modal, .purchase-modal, .my-courses-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1001;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            align-items: center;
-            justify-content: center;
-        }
-        .auth-modal.active, .admin-modal.active, .purchase-modal.active, .my-courses-modal.active {
-            display: flex;
-            opacity: 1;
-        }
+        /* General Modal Styles */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 1001; display: none; opacity: 0; transition: opacity 0.3s ease; align-items: center; justify-content: center; }
+        .modal.active { display: flex; opacity: 1; }
+        .modal-content { position: relative; background: white; width: 90%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: translateY(-20px); transition: transform 0.3s ease; max-height: 90vh; display: flex; flex-direction: column; }
+        .modal.active .modal-content { transform: translateY(0); }
+        .modal-header { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--medium-gray); }
+        .modal-header h2 { margin: 0; font-size: 1.5rem; }
+        .close-modal-btn { font-size: 2rem; cursor: pointer; color: #6c757d; border: none; background: transparent; }
+        .modal-body { padding: 1.5rem; overflow-y: auto; }
+        .modal-footer { padding: 1.5rem; border-top: 1px solid var(--medium-gray); display: flex; justify-content: flex-end; gap: 1rem; }
 
         /* Auth Modal */
-        .modal-content {
-            position: relative;
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            margin: auto;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-        }
-
-        .auth-modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 1.5rem;
-            color: #636e72;
-            cursor: pointer;
-        }
-        
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #f1f1f1;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            color: #636e72;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .tab-btn.active {
-            color: #ff6b6b;
-            border-bottom: 2px solid #ff6b6b;
-            margin-bottom: -2px;
-        }
-        .auth-form h3 { text-align: center; margin-bottom: 0.5rem; color: #2d3436; font-size: 1.5rem; }
-        .auth-form p { text-align: center; margin-bottom: 2rem; color: #636e72; font-size: 1rem; }
-
-        .google-auth-btn {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: var(--heading-font);
-            font-weight: 600;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        .google-auth-btn:hover { background: #3367d6; transform: translateY(-2px); }
-        .google-auth-btn i { font-size: 1.2rem; }
+        .auth-modal .modal-content { max-width: 400px; }
+        .auth-tabs { display: flex; margin-bottom: 2rem; border-bottom: 2px solid #f1f1f1; }
+        .tab-btn { flex: 1; padding: 1rem; background: none; border: none; font-size: 1.1rem; cursor: pointer; }
+        .tab-btn.active { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .google-auth-btn { width: 100%; padding: 1rem; background: #4285f4; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
         /* User Menu */
-        .user-menu {
-            position: fixed;
-            top: 80px;
-            right: 5%;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            z-index: 1001;
-            min-width: 250px;
-            animation: slideDown 0.3s ease;
-        }
+        .user-menu { position: fixed; top: 80px; right: 5%; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); z-index: 1001; min-width: 250px; animation: slideDown 0.3s ease; }
         .user-menu-content { padding: 1rem; }
-        .user-info { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e9ecef; margin-bottom: 1rem; }
+        .user-info { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--medium-gray); }
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
-        .user-info h4 { margin: 0; font-size: 1rem; color: #2d3436; }
-        .user-info p { margin: 0; font-size: 0.9rem; color: #636e72; }
-        .user-menu-links a { padding: 0.75rem 1rem; text-decoration: none; color: #2d3436; border-radius: 6px; transition: background 0.3s ease, color 0.3s ease; font-weight: 500; display: block; }
-        .user-menu-links a:hover { background: #f8f9fa; color: #ff6b6b; }
-        .user-menu-links a:last-child { color: #dc3545; border-top: 1px solid #e9ecef; margin-top: 0.5rem; padding-top: 1rem; }
-        
-        /* Admin Panel Modal */
-        .admin-modal-content {
-            background: white;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 1200px;
-            height: 90vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.3s ease;
-        }
-        .admin-modal.active .admin-modal-content { transform: scale(1) translateY(0); }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid #e9ecef; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); }
-        .admin-header h2 { margin: 0; color: #2d3436; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        .close-admin-modal { font-size: 2rem; cursor: pointer; color: #6c757d; transition: all 0.3s ease; border: none; background: transparent; }
-        .admin-tabs { display: flex; background: #f8f9fa; border-bottom: 1px solid #e9ecef; }
-        .admin-tab-btn { padding: 1rem 2rem; background: none; border: none; cursor: pointer; font-weight: 600; color: #6c757d; transition: all 0.3s ease; border-bottom: 3px solid transparent; }
-        .admin-tab-btn.active { color: #ff6b6b; border-bottom-color: #ff6b6b; background: white; }
-        .admin-tab-content { padding: 2rem; overflow-y: auto; flex-grow: 1; background: white; }
-        .admin-section h3 { margin-bottom: 1.5rem; color: #2d3436; font-size: 1.3rem; border-bottom: 2px solid #ff6b6b; padding-bottom: 0.5rem; display: inline-block; }
+        .user-menu-links a { display: block; padding: 0.75rem 1rem; text-decoration: none; color: var(--dark-color); border-radius: 6px; transition: all 0.2s; }
+        .user-menu-links a:hover { background: var(--light-gray); color: var(--primary-color); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Admin Panel */
+        .admin-modal .modal-content { max-width: 1200px; width: 95%; }
+        .admin-tabs { display: flex; background: var(--light-gray); border-bottom: 1px solid var(--medium-gray); padding: 0 1rem; }
+        .admin-tab-btn { padding: 1rem; font-size: 1rem; background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; }
+        .admin-tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .admin-tab-content { display: none; } .admin-tab-content.active { display: block; }
         .admin-actions { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .admin-actions input { flex: 1; min-width: 200px; padding: 0.75rem 1rem; border: 2px solid #e9ecef; border-radius: 8px; font-size: 1rem; }
-        .admin-action-btn { padding: 0.75rem 1.5rem; background: #ff6b6b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
-        .admin-action-btn:hover { background: #ff5252; transform: translateY(-2px); }
-        .users-table-container, .courses-table-container, .requests-table-container { background: white; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-        .users-table, .courses-table, .requests-table { width: 100%; border-collapse: collapse; }
-        .users-table th, .courses-table th, .requests-table th { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1rem; text-align: left; font-weight: 700; color: #2d3436; border-bottom: 2px solid #dee2e6; position: sticky; top: 0; z-index: 10; font-size: 0.9rem; text-transform: uppercase; white-space: nowrap; }
-        .users-table td, .courses-table td, .requests-table td { padding: 1rem; border-bottom: 1px solid #e9ecef; vertical-align: middle; }
-        .action-btn { padding: 0.5rem; background: none; border: none; cursor: pointer; border-radius: 6px; transition: all 0.3s ease; margin: 0 0.2rem; }
-        .edit-btn { color: #007bff; background: rgba(0, 123, 255, 0.1); } .edit-btn:hover { background: #007bff; color: white; }
-        .delete-btn { color: #dc3545; background: rgba(220, 53, 69, 0.1); } .delete-btn:hover { background: #dc3545; color: white; }
-        .admin-active { color: #28a745; background: rgba(40, 167, 69, 0.1); } .admin-active:hover { background: #28a745; color: white; }
-        .admin-inactive { color: #6c757d; background: rgba(108, 117, 125, 0.1); } .admin-inactive:hover { background: #6c757d; color: white; }
+        .admin-action-btn { padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .admin-action-btn.secondary { background: #6c757d; }
+        .table-container { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 1rem; border-bottom: 1px solid var(--medium-gray); text-align: left; }
+        .admin-table th { background: var(--light-gray); }
+        .action-btn { background: none; border: none; cursor: pointer; border-radius: 6px; padding: 0.5rem; margin: 0 0.2rem; }
+        .edit-btn { color: #007bff; } .delete-btn { color: var(--danger-color); } .admin-status-btn { color: #ffc107; }
+        
+        /* Request Details Modal */
+        .request-details-modal .modal-content { max-width: 600px; }
+        .screenshot-img { max-width: 100%; border-radius: 8px; margin-top: 1rem; }
 
-        /* Course Form */
-        .course-form-container { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e9ecef; }
-        .course-form h4 { margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        /* Purchase Modal & My Courses Modal */
+        .purchase-modal .modal-content { max-width: 800px; }
+        .my-courses-modal .modal-content { max-width: 1000px; }
         .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #e9ecef; border-radius: 6px; font-size: 1rem; }
-        .form-group textarea { resize: vertical; min-height: 80px; }
-        .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        .admin-action-btn.secondary { background: #6c757d; } .admin-action-btn.secondary:hover { background: #5a6268; }
-
-        /* Table Cell Styles */
-        .user-info-cell, .course-info-cell { display: flex; align-items: center; gap: 0.75rem; }
-        .user-avatar-small { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-        .user-name { font-weight: 600; }
-        .user-uid { font-size: 0.8rem; color: #6c757d; font-family: monospace; }
-        .course-thumbnail { width: 48px; height: 32px; border-radius: 6px; object-fit: cover; }
-        .course-title { font-weight: 600; }
-        .course-id { font-size: 0.8rem; color: #6c757d; font-family: monospace; }
-        .new-badge { background: #ff6b6b; color: white; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 12px; margin-left: 0.5rem; display: inline-block; }
-        .new-course-badge { position: absolute; top: 10px; right: 10px; background: #ff6b6b; color: white; font-size: 0.8rem; font-weight: 700; padding: 0.3rem 0.6rem; border-radius: 15px; z-index: 10; }
-        
-        /* Requests Table */
-        .request-type { background: #e3f2fd; color: #1976d2; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem; }
-        .status-badge { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; text-transform: capitalize; }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-progress { background: #d1ecf1; color: #0c5460; }
-        .status-completed { background: #d4edda; color: #155724; }
-        .status-rejected { background: #f8d7da; color: #721c24; }
-        .view-btn { color: #17a2b8; background: rgba(23, 162, 184, 0.1); } .view-btn:hover { background: #17a2b8; color: white; }
-
-        /* Request View Modal */
-        .request-modal { display:none; }
-        .request-modal.active { display:flex; }
-        .request-modal-content { background: white; border-radius: 12px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; animation: slideUp 0.3s ease; }
-        .request-modal-header { padding: 1.5rem; border-bottom: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; }
-        .close-request-modal { font-size: 1.5rem; cursor: pointer; color: #6c757d; }
-        .request-modal-body { padding: 1.5rem; }
-        .request-detail { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f3f4; }
-        .request-message-full { white-space: pre-wrap; line-height: 1.5; background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 0.5rem; }
-        .request-modal-footer { padding: 1.5rem; border-top: 1px solid #e9ecef; display: flex; gap: 1rem; justify-content: flex-end; }
-        
-        /* Scrolling Text Strip */
-        .scrolling-text-container { width: 100%; background: linear-gradient(90deg, #ff6b6b, #ff8e8e); padding: 1rem 0; overflow: hidden; margin: 2rem 0; }
-        .scrolling-text { display: flex; white-space: nowrap; animation: scroll 20s linear infinite; }
-        .scrolling-text span { font-family: var(--heading-font); font-size: 1.5rem; font-weight: 700; color: white; padding: 0 2rem; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* Course Video */
-        .course-video-container { position: relative; width: 100%; height: 200px; overflow: hidden; border-radius: 12px 12px 0 0; background: #000; display: flex; align-items: center; justify-content: center; }
-        .course-video { width: 100%; height: 100%; object-fit: cover; border: none; }
-        .course-video-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; }
-        .course-video-placeholder i { font-size: 3rem; margin-bottom: 0.5rem; opacity: 0.8; }
-
-        /* Course Search */
-        .course-search-container { margin: 2rem 0; display: flex; justify-content: center; }
-        .course-search-box { position: relative; width: 100%; max-width: 500px; display: flex; align-items: center; background: white; border: 2px solid #e9ecef; border-radius: 50px; padding: 0.5rem; transition: all 0.3s ease; }
-        .course-search-box:focus-within { border-color: #ff6b6b; }
-        .search-icon { color: #6c757d; margin-left: 1rem; margin-right: 0.8rem; font-size: 1.1rem; }
-        #courseSearchInput { flex: 1; border: none; outline: none; font-size: 1rem; padding: 0.8rem 0; background: transparent; }
-        .clear-search-btn { background: none; border: none; color: #6c757d; cursor: pointer; padding: 0.5rem; transition: all 0.3s ease; display: none; }
-
-        /* Purchase Modal */
-        .purchase-modal-content { background: white; border-radius: 12px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
-        .purchase-modal-header { padding: 1.5rem; border-bottom: 1px solid #e9ecef; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%); color: white; border-radius: 12px 12px 0 0; }
-        .purchase-modal-header h2 { margin: 0; font-size: 1.5rem; }
-        .close-purchase-modal { font-size: 1.5rem; cursor: pointer; color: white; }
-        .purchase-modal-body { padding: 1.5rem; }
-        .course-purchase-info { display: flex; gap: 1.5rem; margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; }
-        .course-purchase-image img { width: 120px; height: 80px; object-fit: cover; border-radius: 8px; }
-        .course-price-display { font-size: 1.2rem; font-weight: 600; color: #ff6b6b; }
-        .payment-section h4, .screenshot-section h4 { margin: 0 0 1rem 0; color: #2d3436; display: flex; align-items: center; gap: 0.5rem; }
-        .qr-section { text-align: center; margin-bottom: 1.5rem; }
-        .qr-code { width: 150px; height: 150px; border-radius: 8px; }
-        .payment-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .upload-area { border: 2px dashed #dee2e6; border-radius: 8px; padding: 2rem; text-align: center; transition: border-color 0.3s ease; background: #f8f9fa; cursor: pointer; }
-        .upload-area:hover { border-color: #ff6b6b; }
-        .screenshot-preview { position: relative; border: 2px solid #dee2e6; border-radius: 8px; overflow: hidden; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid var(--medium-gray); border-radius: 6px; }
+        .qr-code { width: 150px; height: 150px; }
+        .upload-area { border: 2px dashed #dee2e6; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; }
         .screenshot-preview img { width: 100%; max-height: 200px; object-fit: contain; }
-        .remove-screenshot { position: absolute; top: 0.5rem; right: 0.5rem; background: rgba(255, 107, 107, 0.9); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
-        .purchase-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
-        .submit-purchase-btn { background: #28a745; }
-        .cancel-purchase-btn { background: #6c757d; }
-        
-        /* My Courses Modal */
-        .my-courses-modal-content { background: white; border-radius: 12px; max-width: 1000px; width: 100%; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s ease; }
-        .my-courses-modal-header { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; border-radius: 12px 12px 0 0; }
-        .my-courses-modal-header h2 { margin: 0; font-size: 1.5rem; }
-        .close-my-courses-modal { font-size: 1.5rem; cursor: pointer; color: white; }
-        .my-courses-modal-body { padding: 1.5rem; }
-        .my-courses-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
-        .my-courses-tab-btn { padding: 0.75rem 1.5rem; background: #f8f9fa; color: #6c757d; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; }
-        .my-courses-tab-btn.active { background: #4CAF50; color: white; }
         .my-courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-        .my-course-card { border: 1px solid #e9ecef; border-radius: 12px; overflow: hidden; background: white; }
+        .my-course-card { border: 1px solid var(--medium-gray); border-radius: 12px; overflow: hidden; }
         .my-course-image { position: relative; height: 180px; } .my-course-image img { width: 100%; height: 100%; object-fit: cover; }
-        .course-status-badge { position: absolute; top: 1rem; right: 1rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; text-transform: capitalize; color: white; }
-        .my-course-details { padding: 1.5rem; }
-        .purchase-date { color: #6c757d; font-size: 0.9rem; margin-bottom: 1rem; }
-        .pending-message, .rejected-message { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; border-radius: 8px; font-size: 0.9rem; }
-        .pending-message { background: #fff3cd; color: #856404; }
-        .rejected-message { background: #f8d7da; color: #721c24; }
-        .access-course-btn { width: 100%; padding: 0.75rem; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .no-courses { text-align: center; padding: 3rem 1rem; color: #6c757d; }
-        .browse-courses-btn { padding: 0.75rem 1.5rem; background: #ff6b6b; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        
-        /* Success & Demo Banners */
-        .success-message, .demo-mode-indicator { position: fixed; top: 20px; right: 20px; color: white; padding: 1rem 1.5rem; border-radius: 8px; z-index: 10001; animation: slideInRight 0.5s ease; font-weight: 500; }
-        .success-message { background: #28a745; display: none; }
-        .demo-mode-indicator { background: #ffc107; color: #000; }
-        
-        /* Mobile Menu */
-        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: #2d3436; cursor: pointer; z-index: 1002; }
-        .mobile-menu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1001; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s ease; }
-        .mobile-menu.active { transform: translateX(0); display: block; }
-        .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .mobile-menu-close { background: none; border: none; font-size: 1.5rem; }
-        .mobile-nav-links { display: flex; flex-direction: column; gap: 1.5rem; }
-        .mobile-nav-links a { font-size: 1.2rem; color: #2d3436; text-decoration: none; }
-        .mobile-admin-btn, .mobile-login-btn { margin-top: 2rem; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; width: 100%; cursor: pointer; }
-        .mobile-admin-btn { background: #6c757d; color: white; display: none;}
-        .mobile-login-btn { background: #ff6b6b; color: white; }
+        .status-badge { position: absolute; top: 1rem; right: 1rem; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; color: white; }
+        .status-pending { background: #ffc107; } .status-approved { background: var(--success-color); } .status-rejected { background: var(--danger-color); }
 
-        /* Responsive Styles */
+        /* Helper & Misc Classes */
+        .success-message, .error-message { position: fixed; top: 20px; right: 20px; color: white; padding: 1rem; border-radius: 8px; z-index: 10002; display: none; animation: slideInRight 0.5s ease; }
+        .success-message { background: var(--success-color); }
+        .error-message { background: var(--danger-color); }
+        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .mobile-menu-btn { display: none; }
+        .mobile-menu { display: none; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 5rem; }
-            .hero-content { padding-right: 0; margin-bottom: 2rem; }
-            .hero-content h1 { font-size: 2.5rem; }
-            .navbar { padding: 1rem 5%; }
+            .hero { flex-direction: column; text-align: center; }
             .nav-links, .nav-buttons .login-btn, .nav-buttons .admin-btn { display: none; }
-            .mobile-menu-btn { display: block; }
-            .form-row, .payment-inputs { grid-template-columns: 1fr; }
-            .admin-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .admin-tabs { flex-wrap: wrap; }
-            .admin-actions { flex-direction: column; align-items: stretch; }
-            .admin-modal-content { height: 95vh; }
-            .user-menu { right: 2%; left: 2%; }
+            .mobile-menu-btn { display: block; background: none; border: none; font-size: 1.5rem; z-index: 1002;}
+            .mobile-menu { display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 1001; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s ease; }
+            .mobile-menu.active { transform: translateX(0); }
+            .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+            .mobile-menu-close { background: none; border: none; font-size: 1.5rem; }
+            .mobile-nav-links { display: flex; flex-direction: column; gap: 1.5rem; }
+            .mobile-nav-links a, .mobile-nav-links button { font-size: 1.2rem; text-decoration: none; color: var(--dark-color); }
+            .mobile-nav-links button { text-align: left; padding: 0; background: none; border: none; cursor: pointer; }
         }
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
+    <!-- Navbar -->
     <nav class="navbar">
         <a href="#home" class="logo">Trade Mastery</a>
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#courses">Courses</a>
-            <a href="#features">Features</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="#" onclick="redirectToWhatsApp('contact'); return false;">Contact</a>
         </div>
         <div class="nav-buttons">
-            <button class="admin-btn" onclick="openAdminPanel()" title="Admin Panel">
-                <i class="fas fa-cog"></i>
-            </button>
-            <button class="login-btn" onclick="openAuthModal()">Login/Register</button>
+            <button class="admin-btn" onclick="openAdminPanel()" title="Admin Panel"><i class="fas fa-cog"></i></button>
+            <button class="login-btn" onclick="openModal('authModal')">Login</button>
         </div>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
     </nav>
-
+    
+    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
             <div class="logo">Trade Mastery</div>
-            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
         </div>
         <div class="mobile-nav-links">
             <a href="#home" onclick="toggleMobileMenu()">Home</a>
             <a href="#courses" onclick="toggleMobileMenu()">Courses</a>
-            <a href="#features" onclick="toggleMobileMenu()">Features</a>
-            <a href="#testimonials" onclick="toggleMobileMenu()">Testimonials</a>
-            <a href="#" onclick="redirectToWhatsApp('contact'); toggleMobileMenu(); return false;">Contact</a>
-            <button class="mobile-admin-btn" onclick="openAdminPanel(); toggleMobileMenu()">Admin Panel</button>
-            <button class="mobile-login-btn" onclick="openAuthModal(); toggleMobileMenu()">Login/Register</button>
+            <button class="login-btn-mobile" onclick="openModal('authModal'); toggleMobileMenu();">Login</button>
+            <button class="admin-btn-mobile" style="display:none;" onclick="openAdminPanel(); toggleMobileMenu();">Admin Panel</button>
         </div>
     </div>
 
-    <div class="auth-modal" id="authModal">
+    <!-- Main Content -->
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>Unlock Your Potential</h1>
+                <p>Join Trade Mastery to gain skills, get certified, and advance your career with our expert-led courses.</p>
+                <button class="cta-button" onclick="document.getElementById('courses').scrollIntoView()">Explore Courses</button>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1350" alt="Students learning">
+            </div>
+        </section>
+
+        <section id="courses" class="courses">
+            <h2 data-aos="fade-up">Our Courses</h2>
+            <div class="course-grid">
+                <!-- Courses will be loaded here by JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom" style="text-align:center; padding: 2rem; background: var(--dark-color); color: white;">
+            <p>&copy; 2024 Trade Mastery. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Auth Modal -->
+    <div class="modal auth-modal" id="authModal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeAuthModal()">&times;</span>
-            <div class="auth-tabs">
-                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
-                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            <div class="modal-header">
+                <h2>Welcome</h2>
+                <button class="close-modal-btn" onclick="closeModal('authModal')">&times;</button>
             </div>
-            <div id="loginTab">
-                <div class="auth-form">
-                    <h3>Welcome Back!</h3>
-                    <p>Sign in to continue your learning journey</p>
-                    <button class="google-auth-btn" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Continue with Google</button>
-                </div>
-            </div>
-            <div id="registerTab" style="display: none;">
-                <div class="auth-form">
-                    <h3>Join Trade Mastery</h3>
-                    <p>Create your account to start learning</p>
-                    <button class="google-auth-btn" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Continue with Google</button>
-                </div>
+            <div class="modal-body" style="text-align:center;">
+                <p>Sign in or create an account to continue.</p>
+                <button class="google-auth-btn" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Continue with Google</button>
             </div>
         </div>
     </div>
 
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-modal-content">
-            <div class="admin-header">
-                <h2><i class="fas fa-cog"></i> Admin Panel</h2>
-                <button class="close-admin-modal" onclick="closeAdminPanel()">&times;</button>
+    <!-- Admin Panel Modal -->
+    <div class="modal admin-modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Panel</h2>
+                <button class="close-modal-btn" onclick="closeModal('adminModal')">&times;</button>
             </div>
             <div class="admin-tabs">
-                <button class="admin-tab-btn active" onclick="switchAdminTab(event, 'users')">Users</button>
-                <button class="admin-tab-btn" onclick="switchAdminTab(event, 'courses')">Courses</button>
+                <button class="admin-tab-btn active" onclick="switchAdminTab(event, 'courses')">Courses</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab(event, 'requests')">Requests</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab(event, 'users')">Users</button>
             </div>
-            <div class="admin-tab-content" id="usersTab">
-                <div class="admin-section">
-                    <h3>User Management</h3>
-                    <div class="users-table-container">
-                        <table class="users-table">
-                            <thead><tr><th>User</th><th>Email</th><th>Joined</th><th>Actions</th></tr></thead>
+            <div class="modal-body">
+                <!-- Courses Tab -->
+                <div id="coursesTab" class="admin-tab-content active">
+                    <div class="admin-actions">
+                        <button class="admin-action-btn" onclick="showCourseForm()">Add New Course</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead><tr><th>Course</th><th>Price</th><th>Actions</th></tr></thead>
+                            <tbody id="coursesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Requests Tab -->
+                <div id="requestsTab" class="admin-tab-content">
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead><tr><th>User</th><th>Course</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody id="requestsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Users Tab -->
+                <div id="usersTab" class="admin-tab-content">
+                    <div class="table-container">
+                        <table class="admin-table">
+                            <thead><tr><th>User</th><th>Email</th><th>Admin</th><th>Actions</th></tr></thead>
                             <tbody id="usersTableBody"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="admin-tab-content" id="coursesTab" style="display: none;">
-                 <div class="admin-section">
-                    <h3>Course Management</h3>
-                    <div class="admin-actions">
-                        <button class="admin-action-btn" onclick="showAddCourseForm()"><i class="fas fa-plus"></i> Add New Course</button>
+        </div>
+    </div>
+    
+    <!-- Course Form Modal -->
+    <div class="modal course-form-modal" id="courseFormModal">
+        <div class="modal-content" style="max-width: 600px;">
+             <form id="courseForm" onsubmit="saveCourse(event)">
+                <div class="modal-header">
+                    <h2 id="courseFormTitle">Add Course</h2>
+                    <button type="button" class="close-modal-btn" onclick="closeModal('courseFormModal')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="courseId">
+                    <div class="form-group">
+                        <label for="courseTitle">Course Title</label>
+                        <input type="text" id="courseTitle" required>
                     </div>
-                    <div class="course-form-container" id="courseFormContainer" style="display: none;">
-                        <form id="courseForm" onsubmit="saveCourse(event)">
-                            <h4 id="courseFormTitle">Add New Course</h4>
-                             <div class="form-row">
-                                <div class="form-group"><label for="courseTitle">Title</label><input type="text" id="courseTitle" required></div>
-                                <div class="form-group"><label for="coursePrice">Price ($)</label><input type="number" id="coursePrice" required></div>
-                            </div>
-                            <div class="form-group"><label for="courseDescription">Description</label><textarea id="courseDescription" rows="3" required></textarea></div>
-                            <div class="form-group"><label for="courseVideoLink">YouTube Video URL</label><input type="url" id="courseVideoLink" required></div>
-                            <div class="form-actions">
-                                <button type="submit" class="admin-action-btn"><i class="fas fa-save"></i> Save</button>
-                                <button type="button" class="admin-action-btn secondary" onclick="cancelCourseForm()">Cancel</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="courseDescription">Description</label>
+                        <textarea id="courseDescription" rows="4" required></textarea>
                     </div>
-                    <div class="courses-table-container">
-                        <table class="courses-table">
-                            <thead><tr><th>Course</th><th>Price</th><th>Video Link</th><th>Actions</th></tr></thead>
-                            <tbody id="coursesTableBody"></tbody>
-                        </table>
+                    <div class="form-group">
+                        <label for="coursePrice">Price ($)</label>
+                        <input type="number" id="coursePrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseVideoLink">YouTube Video URL</label>
+                        <input type="url" id="courseVideoLink" placeholder="https://www.youtube.com/watch?v=..." required>
                     </div>
                 </div>
-            </div>
-            <div class="admin-tab-content" id="requestsTab" style="display: none;">
-                <div class="admin-section">
-                    <h3>User Requests</h3>
-                    <div class="requests-table-container">
-                        <table class="requests-table">
-                            <thead><tr><th>User</th><th>Course</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-                            <tbody id="requestsTableBody"></tbody>
-                        </table>
+                <div class="modal-footer">
+                    <button type="button" class="admin-action-btn secondary" onclick="closeModal('courseFormModal')">Cancel</button>
+                    <button type="submit" class="admin-action-btn">Save Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Purchase Modal -->
+    <div class="modal purchase-modal" id="purchaseModal">
+        <div class="modal-content">
+            <form id="purchaseForm" onsubmit="submitPurchase(event)">
+                <div class="modal-header"><h2>Purchase Course</h2><button type="button" class="close-modal-btn" onclick="closeModal('purchaseModal')">&times;</button></div>
+                <div class="modal-body">
+                    <h3 id="purchaseCourseTitle"></h3>
+                    <p>To complete your purchase, please make the payment using the QR code below and upload a screenshot of the transaction.</p>
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <img src="https://i.ibb.co/6r2R8Tq/qr.png" alt="Payment QR Code" class="qr-code">
+                        <p id="purchaseCoursePrice" style="font-weight: bold; margin-top: 0.5rem;"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentScreenshot">Payment Screenshot</label>
+                        <div class="upload-area" onclick="document.getElementById('paymentScreenshotInput').click();">
+                            <p>Click to upload</p>
+                        </div>
+                        <input type="file" id="paymentScreenshotInput" accept="image/*" required style="display:none;" onchange="previewScreenshot(event)">
+                         <div class="screenshot-preview" id="screenshotPreview" style="display: none; margin-top: 1rem; text-align: center;">
+                            <img id="previewImage" src="" alt="Screenshot Preview">
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="admin-action-btn secondary" onclick="closeModal('purchaseModal')">Cancel</button>
+                    <button type="submit" class="admin-action-btn">Submit for Review</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="purchase-modal" id="purchaseModal">
-         <div class="purchase-modal-content">
-            <div class="purchase-modal-header">
-                <h2><i class="fas fa-shopping-cart"></i> Purchase Course</h2>
-                <button class="close-purchase-modal" onclick="closePurchaseForm()">&times;</button>
+    <!-- Request Details Modal -->
+    <div class="modal request-details-modal" id="requestDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header"><h2>Request Details</h2><button class="close-modal-btn" onclick="closeModal('requestDetailsModal')">&times;</button></div>
+            <div class="modal-body" id="requestDetailsBody">
+                <!-- Details will be injected by JS -->
             </div>
-            <div class="purchase-modal-body">
-                <div class="course-purchase-info">
-                     <img id="purchaseCourseImage" src="" alt="Course Image" class="course-purchase-image">
-                    <div>
-                        <h3 id="purchaseCourseTitle"></h3>
-                        <p id="purchaseCourseDescription"></p>
-                        <div class="course-price-display" id="purchaseCoursePrice"></div>
-                    </div>
-                </div>
-                <form id="purchaseForm" onsubmit="submitPurchase(event)">
-                    <div class="payment-section">
-                        <h4><i class="fas fa-qrcode"></i> Payment Details</h4>
-                        <div class="qr-section">
-                            <img src="https://i.ibb.co/6r2R8Tq/qr.png" alt="QR Code to Pay" class="qr-code">
-                            <p>Scan QR code to pay</p>
-                        </div>
-                        <div class="payment-inputs">
-                            <div class="form-group"><label for="paymentAmount">Amount Paid (₹)</label><input type="number" id="paymentAmount" required></div>
-                            <div class="form-group"><label for="upiId">UPI ID (Optional)</label><input type="text" id="upiId"></div>
-                        </div>
-                    </div>
-                    <div class="screenshot-section">
-                         <h4><i class="fas fa-image"></i> Payment Screenshot</h4>
-                        <div class="screenshot-upload">
-                            <input type="file" id="paymentScreenshot" accept="image/*" required onchange="previewScreenshot(event)" style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;">
-                            <div class="upload-area" id="uploadArea"><i class="fas fa-cloud-upload-alt"></i><p>Click to upload</p></div>
-                            <div class="screenshot-preview" id="screenshotPreview" style="display: none;">
-                                <img id="previewImage" src="" alt="Screenshot Preview">
-                                <button type="button" class="remove-screenshot" onclick="removeScreenshot()">&times;</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="purchase-actions">
-                        <button type="submit" class="admin-action-btn submit-purchase-btn"><i class="fas fa-check"></i> Submit Purchase</button>
-                        <button type="button" class="admin-action-btn cancel-purchase-btn" onclick="closePurchaseForm()">Cancel</button>
-                    </div>
-                </form>
+            <div class="modal-footer" id="requestDetailsFooter">
+                 <!-- Actions will be injected by JS -->
             </div>
         </div>
     </div>
     
-    <div class="my-courses-modal" id="myCoursesModal">
-        <div class="my-courses-modal-content">
-            <div class="my-courses-modal-header">
-                <h2><i class="fas fa-graduation-cap"></i> My Courses</h2>
-                <button class="close-my-courses-modal" onclick="closeMyCoursesModal()">&times;</button>
-            </div>
-            <div class="my-courses-modal-body">
-                <div class="my-courses-tabs">
-                    <button class="my-courses-tab-btn active" onclick="switchMyCoursesTab(event, 'all')">All</button>
-                    <button class="my-courses-tab-btn" onclick="switchMyCoursesTab(event, 'approved')">Approved</button>
-                    <button class="my-courses-tab-btn" onclick="switchMyCoursesTab(event, 'pending')">Pending</button>
-                    <button class="my-courses-tab-btn" onclick="switchMyCoursesTab(event, 'rejected')">Rejected</button>
+     <!-- My Courses Modal -->
+    <div class="modal my-courses-modal" id="myCoursesModal">
+        <div class="modal-content">
+            <div class="modal-header"><h2>My Courses</h2><button class="close-modal-btn" onclick="closeModal('myCoursesModal')">&times;</button></div>
+            <div class="modal-body">
+                <div class="my-courses-grid" id="myCoursesContent">
+                    <!-- User's courses will be loaded here -->
                 </div>
-                <div id="myCoursesContent"></div>
             </div>
         </div>
     </div>
-    
-    <div class="success-message" id="successMessage"><span>Purchase request submitted successfully!</span></div>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content" data-aos="fade-up">
-                <h1>Transform Your Future with Trade Mastery</h1>
-                <p>Discover top-quality courses and unlock your potential. Learn from the best to become the best.</p>
-                <button class="cta-button" onclick="document.getElementById('courses').scrollIntoView()">Explore Courses</button>
-            </div>
-            <div class="hero-image" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1350" alt="Students collaborating on a project">
-            </div>
-        </section>
+    <!-- Notification Banners -->
+    <div class="success-message" id="notificationBanner"></div>
 
-        <section id="courses" class="courses">
-            <h2 data-aos="fade-up">Featured Courses</h2>
-            <div class="course-search-container" data-aos="fade-up" data-aos-delay="100">
-                <div class="course-search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="courseSearchInput" placeholder="Search courses..." onkeyup="searchCourses()">
-                    <button class="clear-search-btn" onclick="clearCourseSearch()">&times;</button>
-                </div>
-            </div>
-            <div class="course-grid">
-                </div>
-        </section>
-
-        <div class="scrolling-text-container">
-            <div class="scrolling-text">
-                <span>Trade Mastery >>></span><span>Trade Mastery >>></span><span>Trade Mastery >>></span><span>Trade Mastery >>></span>
-                <span>Trade Mastery >>></span><span>Trade Mastery >>></span><span>Trade Mastery >>></span><span>Trade Mastery >>></span>
-            </div>
-        </div>
-        
-        <section id="features" class="features">
-            <h2 data-aos="fade-up">Why Choose Trade Mastery?</h2>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up"><i class="fas fa-graduation-cap"></i><h3>Expert Instructors</h3><p>Learn from industry professionals</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-laptop-code"></i><h3>Hands-on Projects</h3><p>Build real-world applications</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-certificate"></i><h3>Certification</h3><p>Get recognized certificates</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-users"></i><h3>Community Support</h3><p>Join our learning community</p></div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="testimonials">
-            <h2 data-aos="fade-up">Student Success Stories</h2>
-            <div class="testimonial-slider">
-                <div class="testimonial-card" data-aos="fade-up">
-                    <p>"Trade Mastery helped me land my dream job. The courses are comprehensive and practical."</p>
-                    <div class="student-info"><img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Student Sarah"><div><h4>Sarah Johnson</h4><p>Web Developer</p></div></div>
-                </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <p>"The data science course was exactly what I needed to transition into a new career."</p>
-                    <div class="student-info"><img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Student Michael"><div><h4>Michael Chen</h4><p>Data Scientist</p></div></div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section"><h3>Trade Mastery</h3><p>Empowering learners worldwide</p></div>
-            <div class="footer-section"><h4>Quick Links</h4><a href="#home">Home</a><a href="#courses">Courses</a></div>
-            <div class="footer-section"><h4>Contact Us</h4><p>Email: info@trademastery.com</p></div>
-            <div class="footer-section"><h4>Follow Us</h4><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin"></i></a></div></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2024 Trade Mastery. All rights reserved.</p></div>
-    </footer>
-
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    
+    <!-- AOS Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+    <!-- Main Application JavaScript -->
     <script>
-        // --- FIREBASE CONFIG ---
-        // Your web app's Firebase configuration
+        // --- CONFIGURATION ---
         const firebaseConfig = {
-            apiKey: "AIzaSyAE2L8gEwYV5l2FYYOpOAgKIzF7ewO_we0", // This is a demo key
-            authDomain: "course-sell-d8109.firebaseapp.com",
-            projectId: "course-sell-d8109",
-            storageBucket: "course-sell-d8109.appspot.com",
-            messagingSenderId: "984245906845",
-            appId: "1:984245906845:web:084403eb131872cac31374"
+            apiKey: "YOUR_API_KEY", // Replace with your actual Firebase API key
+            authDomain: "YOUR_AUTH_DOMAIN", // e.g., your-project-id.firebaseapp.com
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET", // e.g., your-project-id.appspot.com
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
-        
-        // --- SCRIPT LOGIC ---
-        
-        // Global State
+        const PERMANENT_ADMIN_EMAIL = "your-admin-email@example.com"; // Replace with your admin email
+
+        // --- GLOBAL STATE & CACHE ---
         let currentUser = null;
         let isAdmin = false;
-        let firebaseInitialized = false;
-        let allUsers = [];
-        let allCourses = [];
-        let allRequests = [];
-        let myCoursesFilter = 'all';
+        let allCoursesCache = [];
         let currentPurchaseCourse = null;
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            initializeFirebase();
-            initializeAuth();
-            initializeUI();
+            try {
+                firebase.initializeApp(firebaseConfig);
+                window.auth = firebase.auth();
+                window.db = firebase.firestore();
+                window.googleProvider = new firebase.auth.GoogleAuthProvider();
+                console.log("Firebase initialized.");
+                initializeAuthListener();
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                document.body.innerHTML = "<h1>Error: Could not connect to the database. Please check Firebase configuration.</h1>";
+            }
+            AOS.init({ duration: 800, once: true });
             loadFeaturedCourses();
         });
-        
-        function initializeUI() {
-            AOS.init({ duration: 1000, once: true, offset: 100 });
-
-            // Navbar scroll effect
-            const navbar = document.querySelector('.navbar');
-            window.addEventListener('scroll', () => {
-                navbar.classList.toggle('scrolled', window.pageYOffset > 50);
-            });
-            
-            // Close modals on outside click
-            ['authModal', 'adminModal', 'purchaseModal', 'myCoursesModal'].forEach(id => {
-                const modal = document.getElementById(id);
-                if(modal) {
-                    modal.addEventListener('click', e => {
-                        if (e.target.id === id) closeModal(id);
-                    });
-                }
-            });
-        }
-        
-        function initializeFirebase() {
-            try {
-                if (typeof firebase !== 'undefined') {
-                    firebase.initializeApp(firebaseConfig);
-                    window.auth = firebase.auth();
-                    window.db = firebase.firestore();
-                    window.googleProvider = new firebase.auth.GoogleAuthProvider();
-                    firebaseInitialized = true;
-                    console.log("Firebase initialized successfully.");
-                } else {
-                    throw new Error("Firebase library not found.");
-                }
-            } catch (error) {
-                console.warn("Firebase not available, entering demo mode.", error.message);
-                firebaseInitialized = false;
-                runInDemoMode();
-            }
-        }
-        
-        function runInDemoMode() {
-            const indicator = document.createElement('div');
-            indicator.className = 'demo-mode-indicator';
-            indicator.innerHTML = `<span>Demo Mode - No Database Connection</span>`;
-            document.body.appendChild(indicator);
-            
-            // Simulate a logged-in admin user for testing
-            currentUser = { uid: 'demoadmin', displayName: 'Demo Admin', email: 'admin@demo.com', photoURL: 'https://randomuser.me/api/portraits/lego/1.jpg' };
-            isAdmin = true;
-            updateUIAfterAuthStateChange();
-        }
 
         // --- AUTHENTICATION ---
-        function initializeAuth() {
-            if (!firebaseInitialized) return;
-            auth.onAuthStateChanged(user => {
+        function initializeAuthListener() {
+            auth.onAuthStateChanged(async user => {
                 currentUser = user;
-                checkAdminStatus(user); // This will set isAdmin flag
+                if (user) {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    isAdmin = user.email === PERMANENT_ADMIN_EMAIL || (userDoc.exists && userDoc.data().isAdmin === true);
+                } else {
+                    isAdmin = false;
+                }
+                updateUIAfterAuthStateChange();
             });
         }
-        
-        async function checkAdminStatus(user) {
-            if (!user) {
-                isAdmin = false;
-            } else {
-                const permanentAdminEmail = 'moghaeashu@gmail.com';
-                if (user.email === permanentAdminEmail) {
-                    isAdmin = true;
-                } else {
-                    const userDoc = await db.collection('users').doc(user.uid).get();
-                    isAdmin = userDoc.exists && userDoc.data().isAdmin === true;
-                }
-            }
-            updateUIAfterAuthStateChange();
-        }
-        
-        function updateUIAfterAuthStateChange() {
-            const loginBtn = document.querySelector('.login-btn');
-            const mobileLoginBtn = document.querySelector('.mobile-login-btn');
-            const adminBtn = document.querySelector('.admin-btn');
-            const mobileAdminBtn = document.querySelector('.mobile-admin-btn');
 
+        function updateUIAfterAuthStateChange() {
+            const loginBtn = document.querySelector('.nav-buttons .login-btn');
+            const adminBtn = document.querySelector('.nav-buttons .admin-btn');
+            const mobileLoginBtn = document.querySelector('.mobile-nav-links .login-btn-mobile');
+            const mobileAdminBtn = document.querySelector('.mobile-nav-links .admin-btn-mobile');
+            
             if (currentUser) {
                 loginBtn.textContent = 'My Account';
                 loginBtn.onclick = showUserMenu;
                 mobileLoginBtn.textContent = 'My Account';
                 mobileLoginBtn.onclick = () => { showUserMenu(); toggleMobileMenu(); };
             } else {
-                loginBtn.textContent = 'Login/Register';
+                loginBtn.textContent = 'Login';
                 loginBtn.onclick = () => openModal('authModal');
-                mobileLoginBtn.textContent = 'Login/Register';
+                mobileLoginBtn.textContent = 'Login';
                 mobileLoginBtn.onclick = () => { openModal('authModal'); toggleMobileMenu(); };
             }
 
-            adminBtn.style.display = isAdmin ? 'flex' : 'none';
+            adminBtn.style.display = isAdmin ? 'block' : 'none';
             mobileAdminBtn.style.display = isAdmin ? 'block' : 'none';
         }
 
         async function signInWithGoogle() {
-            if (!firebaseInitialized) {
-                alert("Demo Mode: This would sign you in with Google.");
-                closeModal('authModal');
-                return;
-            }
             try {
                 const result = await auth.signInWithPopup(googleProvider);
                 await storeUserData(result.user);
                 closeModal('authModal');
+                showNotification("Signed in successfully!");
             } catch (error) {
                 console.error("Google Sign-In Error:", error);
-                alert("Error signing in. Please try again.");
+                showNotification("Error signing in. Please try again.", true);
             }
         }
-        
+
         async function storeUserData(user) {
             const userRef = db.collection('users').doc(user.uid);
             const userDoc = await userRef.get();
-            const permanentAdminEmail = 'moghaeashu@gmail.com';
-            
             const userData = {
                 uid: user.uid,
                 displayName: user.displayName,
                 email: user.email,
-                photoURL: user.photoURL,
                 lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
             };
-            
             if (!userDoc.exists) {
                 userData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                userData.isAdmin = user.email === permanentAdminEmail;
+                userData.isAdmin = user.email === PERMANENT_ADMIN_EMAIL;
             }
-            
             await userRef.set(userData, { merge: true });
         }
         
-        function signOut() {
-            if(currentUser && document.querySelector('.user-menu')) {
-                 document.querySelector('.user-menu').remove();
-            }
-            if (!firebaseInitialized) {
-                currentUser = null;
-                isAdmin = false;
-                updateUIAfterAuthStateChange();
-                alert("Demo Mode: You have been logged out.");
-                return;
-            }
-            auth.signOut();
+        function signOutUser() {
+            auth.signOut().then(() => {
+                showNotification("You have been signed out.");
+                const menu = document.querySelector('.user-menu');
+                if (menu) menu.remove();
+            });
         }
 
         // --- UI & MODALS ---
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                if (!document.querySelector('.modal.active')) {
-                    document.body.style.overflow = 'auto';
-                }
-            }
-        }
-        
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-        }
-        
-        function switchTab(tab) {
-            document.getElementById('loginTab').style.display = (tab === 'login' ? 'block' : 'none');
-            document.getElementById('registerTab').style.display = (tab === 'register' ? 'block' : 'none');
-            document.querySelector('.tab-btn.active').classList.remove('active');
-            event.target.classList.add('active');
-        }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
         
         function showUserMenu() {
-            if (!currentUser) return;
             if(document.querySelector('.user-menu')) {
-                document.querySelector('.user-menu').remove();
-                return;
+                 document.querySelector('.user-menu').remove();
+                 return;
             }
             const menu = document.createElement('div');
             menu.className = 'user-menu';
             menu.innerHTML = `
                 <div class="user-menu-content">
                     <div class="user-info">
-                        <img src="${currentUser.photoURL || 'https://via.placeholder.com/40'}" alt="Profile" class="user-avatar">
-                        <div><h4>${currentUser.displayName}</h4><p>${currentUser.email}</p></div>
+                        <img src="${currentUser.photoURL || 'https://via.placeholder.com/40'}" class="user-avatar">
+                        <div><h4>${currentUser.displayName}</h4></div>
                     </div>
                     <div class="user-menu-links">
                         <a href="#" onclick="showMyCourses()">My Courses</a>
                         ${isAdmin ? '<a href="#" onclick="openAdminPanel()">Admin Panel</a>' : ''}
-                        <a href="#" onclick="signOut()">Sign Out</a>
+                        <a href="#" onclick="signOutUser()">Sign Out</a>
                     </div>
                 </div>`;
             document.body.appendChild(menu);
-            setTimeout(() => document.addEventListener('click', closeUserMenuOnClickOutside, { once: true }), 0);
+            setTimeout(() => document.addEventListener('click', e => { if (!menu.contains(e.target) && !e.target.closest('.login-btn')) menu.remove(); }, { once: true }), 0);
+        }
+        
+        function showNotification(message, isError = false) {
+            const banner = document.getElementById('notificationBanner');
+            banner.textContent = message;
+            banner.className = isError ? 'error-message' : 'success-message';
+            banner.style.display = 'block';
+            setTimeout(() => { banner.style.display = 'none'; }, 4000);
         }
 
-        function closeUserMenuOnClickOutside(e) {
-            const menu = document.querySelector('.user-menu');
-            if (menu && !menu.contains(e.target) && !e.target.closest('.login-btn')) {
-                menu.remove();
-            }
-        }
-        
-        function showSuccessMessage(message) {
-            const successMsg = document.getElementById('successMessage');
-            successMsg.style.display = 'flex';
-            successMsg.querySelector('span').textContent = message;
-            setTimeout(() => { successMsg.style.display = 'none'; }, 4000);
-        }
-        
-        // --- ADMIN PANEL ---
-        function openAdminPanel() {
-            if (!isAdmin) {
-                alert("Access Denied.");
-                return;
-            }
-            openModal('adminModal');
-            loadUsers();
-        }
-
-        function switchAdminTab(event, tabName) {
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
-            document.getElementById(tabName + 'Tab').style.display = 'block';
-            document.querySelector('.admin-tab-btn.active').classList.remove('active');
-            event.target.classList.add('active');
-            
-            if (tabName === 'users') loadUsers();
-            if (tabName === 'courses') loadCourses();
-            if (tabName === 'requests') loadRequests();
-        }
-        
-        // Admin: Users
-        async function loadUsers() {
-            if (!firebaseInitialized) {
-                allUsers = getDemoUsers();
-                displayUsers(allUsers);
-                return;
-            }
-            const snapshot = await db.collection('users').get();
-            allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            displayUsers(allUsers);
-        }
-        
-        function displayUsers(users) {
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = users.map(user => `
-                <tr>
-                    <td><div class="user-info-cell"><img src="${user.photoURL || ''}" class="user-avatar-small"><div><div class="user-name">${user.displayName}</div><div class="user-uid">${user.uid}</div></div></div></td>
-                    <td>${user.email}</td>
-                    <td>${user.createdAt ? new Date(user.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</td>
-                    <td>
-                        <button class="action-btn ${user.isAdmin ? 'admin-active' : 'admin-inactive'}" onclick="toggleAdminStatus('${user.id}', ${!user.isAdmin})" title="${user.isAdmin ? 'Remove Admin' : 'Make Admin'}"><i class="fas fa-crown"></i></button>
-                        <button class="action-btn delete-btn" onclick="deleteUser('${user.id}')" title="Delete"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>`).join('');
-        }
-        
-        async function toggleAdminStatus(userId, makeAdmin) {
-            if (!firebaseInitialized) {
-                const userIndex = allUsers.findIndex(u => u.id === userId);
-                if (userIndex > -1) allUsers[userIndex].isAdmin = makeAdmin;
-                displayUsers(allUsers);
-                alert(`Demo: Admin status for ${userId} set to ${makeAdmin}`);
-                return;
-            }
-            await db.collection('users').doc(userId).update({ isAdmin: makeAdmin });
-            loadUsers();
-        }
-        
-        async function deleteUser(userId) {
-            if (!confirm("Delete this user?")) return;
-            if (!firebaseInitialized) {
-                allUsers = allUsers.filter(u => u.id !== userId);
-                displayUsers(allUsers);
-                alert(`Demo: User ${userId} deleted.`);
-                return;
-            }
-            await db.collection('users').doc(userId).delete();
-            loadUsers();
-        }
-        
-        // Admin: Courses
-        async function loadCourses() {
-            if (!firebaseInitialized) {
-                if(allCourses.length === 0) allCourses = getDemoCourses();
-                displayAdminCourses(allCourses);
-                return;
-            }
-            const snapshot = await db.collection('courses').orderBy('createdAt', 'desc').get();
-            allCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            displayAdminCourses(allCourses);
-        }
-        
-        function displayAdminCourses(courses) {
-            document.getElementById('coursesTableBody').innerHTML = courses.map(c => `
-                <tr>
-                    <td><div class="course-info-cell"><img src="${getEmbeddedVideoUrl(c.videoLink, true)}" class="course-thumbnail"><div class="course-title">${c.title}</div></div></td>
-                    <td>$${c.price}</td>
-                    <td><a href="${c.videoLink}" target="_blank">Link</a></td>
-                    <td>
-                        <button class="action-btn edit-btn" onclick="editCourse('${c.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn" onclick="deleteCourse('${c.id}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>`).join('');
-        }
-        
-        function showAddCourseForm() {
-            editingCourseId = null;
-            document.getElementById('courseForm').reset();
-            document.getElementById('courseFormTitle').textContent = 'Add New Course';
-            document.getElementById('courseFormContainer').style.display = 'block';
-        }
-        
-        function editCourse(courseId) {
-            const course = allCourses.find(c => c.id === courseId);
-            if (!course) return;
-            editingCourseId = courseId;
-            document.getElementById('courseFormTitle').textContent = 'Edit Course';
-            document.getElementById('courseTitle').value = course.title;
-            document.getElementById('coursePrice').value = course.price;
-            document.getElementById('courseDescription').value = course.description;
-            document.getElementById('courseVideoLink').value = course.videoLink;
-            document.getElementById('courseFormContainer').style.display = 'block';
-        }
-
-        function cancelCourseForm() {
-             document.getElementById('courseFormContainer').style.display = 'none';
-        }
-        
-        async function saveCourse(event) {
-            event.preventDefault();
-            const courseData = {
-                title: document.getElementById('courseTitle').value,
-                price: parseFloat(document.getElementById('coursePrice').value),
-                description: document.getElementById('courseDescription').value,
-                videoLink: document.getElementById('courseVideoLink').value,
-            };
-
-            if (!firebaseInitialized) {
-                if (editingCourseId) {
-                    const index = allCourses.findIndex(c => c.id === editingCourseId);
-                    allCourses[index] = { ...allCourses[index], ...courseData };
-                } else {
-                    allCourses.unshift({ id: 'demo-' + Date.now(), ...courseData, createdAt: new Date() });
-                }
-                alert('Demo: Course saved!');
-                cancelCourseForm();
-                displayAdminCourses(allCourses);
-                loadFeaturedCourses(); // Update main page
-                return;
-            }
-            
-            if (editingCourseId) {
-                await db.collection('courses').doc(editingCourseId).update(courseData);
-            } else {
-                courseData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                await db.collection('courses').add(courseData);
-            }
-            cancelCourseForm();
-            loadCourses();
-            loadFeaturedCourses();
-        }
-
-        async function deleteCourse(courseId) {
-            if (!confirm("Delete this course?")) return;
-            if (!firebaseInitialized) {
-                allCourses = allCourses.filter(c => c.id !== courseId);
-                displayAdminCourses(allCourses);
-                loadFeaturedCourses(); // Update main page
-                alert('Demo: Course deleted!');
-                return;
-            }
-            await db.collection('courses').doc(courseId).delete();
-            loadCourses();
-            loadFeaturedCourses();
-        }
-
-        // Admin: Requests
-        async function loadRequests() {
-            if (!firebaseInitialized) {
-                allRequests = getDemoRequests();
-                displayRequests(allRequests);
-                return;
-            }
-            const snapshot = await db.collection('requests').orderBy('createdAt', 'desc').get();
-            allRequests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            displayRequests(allRequests);
-        }
-
-        function displayRequests(requests) {
-             document.getElementById('requestsTableBody').innerHTML = requests.map(r => `
-                <tr>
-                    <td>${r.userName}<br><small>${r.userEmail}</small></td>
-                    <td>${r.courseTitle}</td>
-                    <td><span class="status-badge status-${r.status.toLowerCase()}">${r.status}</span></td>
-                    <td>${new Date(r.createdAt.seconds * 1000).toLocaleString()}</td>
-                    <td>
-                        <button class="action-btn view-btn" onclick="viewRequest('${r.id}')"><i class="fas fa-eye"></i></button>
-                    </td>
-                </tr>`).join('');
-        }
-
-        function viewRequest(requestId) {
-            const req = allRequests.find(r => r.id === requestId);
-            if (!req) return;
-            
-            const modal = document.createElement('div');
-            modal.className = 'request-modal active';
-            modal.id = 'viewRequestModal';
-            modal.innerHTML = `
-                <div class="request-modal-content">
-                    <div class="request-modal-header"><h3>Request Details</h3><button class="close-request-modal" onclick="closeModal('viewRequestModal'); document.getElementById('viewRequestModal').remove();">&times;</button></div>
-                    <div class="request-modal-body">
-                        <p><strong>User:</strong> ${req.userName} (${req.userEmail})</p>
-                        <p><strong>Course:</strong> ${req.courseTitle}</p>
-                        <p><strong>Amount:</strong> ₹${req.amountPaid}</p>
-                        <p><strong>Status:</strong> ${req.status}</p>
-                        <p><strong>Screenshot:</strong></p>
-                        <img src="${req.screenshotData}" style="max-width:100%; border-radius:8px;">
-                    </div>
-                    <div class="request-modal-footer">
-                        <button class="admin-action-btn" onclick="updateRequestStatus('${req.id}', 'Approved')">Approve</button>
-                        <button class="admin-action-btn secondary" onclick="updateRequestStatus('${req.id}', 'Rejected')">Reject</button>
-                    </div>
-                </div>`;
-            document.body.appendChild(modal);
-        }
-        
-        async function updateRequestStatus(requestId, status) {
-            if (!firebaseInitialized) {
-                const reqIndex = allRequests.findIndex(r => r.id === requestId);
-                if (reqIndex > -1) {
-                    allRequests[reqIndex].status = status;
-                    // Also update the user's course status in demo storage
-                    const req = allRequests[reqIndex];
-                    let demoUserCourses = JSON.parse(localStorage.getItem('demoUserCourses') || '[]');
-                    let courseIndex = demoUserCourses.findIndex(c => c.userId === req.userId && c.courseId === req.courseId);
-                    if (courseIndex > -1) demoUserCourses[courseIndex].status = status;
-                    localStorage.setItem('demoUserCourses', JSON.stringify(demoUserCourses));
-                }
-                displayRequests(allRequests);
-                alert(`Demo: Request ${requestId} status updated to ${status}`);
-                closeModal('viewRequestModal'); document.getElementById('viewRequestModal').remove();
-                return;
-            }
-            
-            const reqRef = db.collection('requests').doc(requestId);
-            await reqRef.update({ status: status });
-            
-            const reqDoc = await reqRef.get();
-            const reqData = reqDoc.data();
-            
-            const userCoursesQuery = await db.collection('userCourses').where('userId', '==', reqData.userId).where('courseId', '==', reqData.courseId).get();
-            userCoursesQuery.docs.forEach(doc => {
-                db.collection('userCourses').doc(doc.id).update({ status: status });
-            });
-            
-            loadRequests();
-            closeModal('viewRequestModal'); document.getElementById('viewRequestModal').remove();
-        }
-        
-        // --- COURSE DISPLAY & PURCHASE ---
+        // --- COURSE DISPLAY & SEARCH ---
         async function loadFeaturedCourses() {
-            if (!firebaseInitialized) {
-                if(allCourses.length === 0) allCourses = getDemoCourses();
-                displayFeaturedCourses(allCourses);
-                return;
+            const grid = document.querySelector('.course-grid');
+            try {
+                const snapshot = await db.collection('courses').orderBy('createdAt', 'desc').get();
+                allCoursesCache = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                displayCoursesOnGrid(allCoursesCache);
+            } catch(e) {
+                console.error("Error loading courses: ", e);
+                grid.innerHTML = "<p>Could not load courses. Please try again later.</p>";
             }
-            const snapshot = await db.collection('courses').orderBy('createdAt', 'desc').get();
-            allCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            displayFeaturedCourses(allCourses);
         }
         
-        function displayFeaturedCourses(courses) {
+        function displayCoursesOnGrid(courses) {
             const grid = document.querySelector('.course-grid');
-            grid.innerHTML = courses.length > 0 ? courses.map(course => {
+            grid.innerHTML = courses.length ? courses.map(course => {
                 const isNew = course.createdAt && (Date.now() - new Date(course.createdAt.seconds * 1000)) < 7 * 24 * 60 * 60 * 1000;
                 return `
                 <div class="course-card" data-aos="fade-up">
                     ${isNew ? '<div class="new-course-badge">NEW</div>' : ''}
                     <div class="course-video-container">
-                        ${getEmbeddedVideoUrl(course.videoLink) ? 
-                        `<iframe class="course-video" src="${getEmbeddedVideoUrl(course.videoLink)}" title="${course.title}" frameborder="0" allowfullscreen></iframe>` : 
-                        `<div class="course-video-placeholder"><i class="fas fa-play-circle"></i><p>${course.title}</p></div>`
-                        }
+                        <iframe class="course-video" src="${getVideoEmbedUrl(course.videoLink)}" title="${course.title}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="course-content">
                         <h3>${course.title}</h3>
                         <p>${course.description}</p>
                         <span class="price">$${course.price}</span>
-                        <div class="course-actions">
-                            <button class="buy-btn" onclick="showPurchaseForm('${course.id}')">Buy Now</button>
-                        </div>
+                        <button class="login-btn buy-btn" onclick="showPurchaseForm('${course.id}')">Buy Now</button>
                     </div>
                 </div>`;
-            }).join('') : '<p>No courses available at the moment.</p>';
-        }
-
-        function getEmbeddedVideoUrl(url, thumbnail = false) {
-            if (!url) return null;
-            let videoId = null;
-            const patterns = [
-                /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
-                /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/
-            ];
-            for (const pattern of patterns) {
-                const match = url.match(pattern);
-                if (match) {
-                    videoId = match[1];
-                    break;
-                }
-            }
-            if (!videoId) return null;
-            return thumbnail ? `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg` : `https://www.youtube.com/embed/${videoId}?rel=0`;
-        }
-
-        function searchCourses() {
-            const term = document.getElementById('courseSearchInput').value.toLowerCase();
-            document.querySelector('.clear-search-btn').style.display = term ? 'block' : 'none';
-            const filtered = allCourses.filter(c => c.title.toLowerCase().includes(term));
-            displayFeaturedCourses(filtered);
-        }
-
-        function clearCourseSearch() {
-            document.getElementById('courseSearchInput').value = '';
-            document.querySelector('.clear-search-btn').style.display = 'none';
-            displayFeaturedCourses(allCourses);
+            }).join('') : "<p>No courses available at the moment.</p>";
         }
         
-        function showPurchaseForm(courseId) {
-            if (!currentUser) {
-                alert("Please log in to purchase a course.");
-                openModal('authModal');
-                return;
+        function getVideoEmbedUrl(url) {
+            if (!url) return '';
+            let videoId = null;
+            const patterns = [ /v=([a-zA-Z0-9_-]{11})/, /youtu\.be\/([a-zA-Z0-9_-]{11})/ ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) { videoId = match[1]; break; }
             }
-            currentPurchaseCourse = allCourses.find(c => c.id === courseId);
-            if (!currentPurchaseCourse) return;
-            
-            document.getElementById('purchaseCourseTitle').textContent = currentPurchaseCourse.title;
-            document.getElementById('purchaseCourseDescription').textContent = currentPurchaseCourse.description;
-            document.getElementById('purchaseCoursePrice').textContent = `Price: $${currentPurchaseCourse.price}`;
-            document.getElementById('purchaseCourseImage').src = getEmbeddedVideoUrl(currentPurchaseCourse.videoLink, true) || 'https://via.placeholder.com/120x80';
-            document.getElementById('paymentAmount').value = currentPurchaseCourse.price * 80; // Assuming conversion rate
-            openModal('purchaseModal');
+            return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : '';
         }
 
-        function closePurchaseForm() {
-            closeModal('purchaseModal');
-            document.getElementById('purchaseForm').reset();
-            removeScreenshot();
+        // --- PURCHASE FLOW ---
+        function showPurchaseForm(courseId) {
+            if (!currentUser) { showNotification("Please sign in to purchase a course.", true); openModal('authModal'); return; }
+            currentPurchaseCourse = allCoursesCache.find(c => c.id === courseId);
+            if (!currentPurchaseCourse) return;
+            document.getElementById('purchaseCourseTitle').textContent = currentPurchaseCourse.title;
+            document.getElementById('purchaseCoursePrice').textContent = `Price: $${currentPurchaseCourse.price}`;
+            openModal('purchaseModal');
         }
 
         function previewScreenshot(event) {
             const file = event.target.files[0];
             if (file) {
                 document.getElementById('previewImage').src = URL.createObjectURL(file);
-                document.getElementById('uploadArea').style.display = 'none';
                 document.getElementById('screenshotPreview').style.display = 'block';
             }
         }
         
-        function removeScreenshot() {
-            document.getElementById('paymentScreenshot').value = '';
-            document.getElementById('uploadArea').style.display = 'block';
-            document.getElementById('screenshotPreview').style.display = 'none';
-        }
-        
         async function submitPurchase(event) {
             event.preventDefault();
-            const screenshotFile = document.getElementById('paymentScreenshot').files[0];
-            if (!screenshotFile) {
-                alert("Please upload a payment screenshot.");
-                return;
+            const screenshotFile = document.getElementById('paymentScreenshotInput').files[0];
+            if (!screenshotFile) { showNotification("Please upload a payment screenshot.", true); return; }
+            
+            showNotification("Submitting your request...");
+            try {
+                const screenshotData = await fileToBase64(screenshotFile);
+                const requestData = {
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName,
+                    userEmail: currentUser.email,
+                    courseId: currentPurchaseCourse.id,
+                    courseTitle: currentPurchaseCourse.title,
+                    screenshotData: screenshotData,
+                    status: 'Pending',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                };
+                // Create purchase request
+                await db.collection('requests').add(requestData);
+                // Create entry in user's courses
+                await db.collection('userCourses').add({
+                    userId: currentUser.uid,
+                    courseId: currentPurchaseCourse.id,
+                    courseTitle: currentPurchaseCourse.title,
+                    purchaseDate: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: 'Pending'
+                });
+                closeModal('purchaseModal');
+                showNotification("Purchase request submitted successfully!");
+            } catch (e) {
+                console.error("Purchase Error: ", e);
+                showNotification("Failed to submit request. Please try again.", true);
             }
-
-            const requestData = {
-                userId: currentUser.uid,
-                userName: currentUser.displayName,
-                userEmail: currentUser.email,
-                courseId: currentPurchaseCourse.id,
-                courseTitle: currentPurchaseCourse.title,
-                amountPaid: parseFloat(document.getElementById('paymentAmount').value),
-                upiId: document.getElementById('upiId').value,
-                status: 'Pending',
-                screenshotData: await fileToBase64(screenshotFile)
-            };
-            
-            if (!firebaseInitialized) {
-                const requestId = 'req-' + Date.now();
-                let demoRequests = JSON.parse(localStorage.getItem('demoRequests') || '[]');
-                demoRequests.unshift({ id: requestId, ...requestData, createdAt: { seconds: Date.now()/1000 } });
-                localStorage.setItem('demoRequests', JSON.stringify(demoRequests));
-                
-                let demoUserCourses = JSON.parse(localStorage.getItem('demoUserCourses') || '[]');
-                demoUserCourses.unshift({ userId: currentUser.uid, courseId: currentPurchaseCourse.id, courseTitle: currentPurchaseCourse.title, status: 'Pending', purchaseDate: { seconds: Date.now()/1000 }, courseImage: getEmbeddedVideoUrl(currentPurchaseCourse.videoLink, true) });
-                localStorage.setItem('demoUserCourses', JSON.stringify(demoUserCourses));
-
-                alert('Demo: Purchase request submitted!');
-                closePurchaseForm();
-                showSuccessMessage('Purchase request submitted!');
-                return;
-            }
-            
-            requestData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-            await db.collection('requests').add(requestData);
-            
-            await db.collection('userCourses').add({
-                userId: currentUser.uid,
-                courseId: currentPurchaseCourse.id,
-                courseTitle: currentPurchaseCourse.title,
-                status: 'Pending',
-                purchaseDate: firebase.firestore.FieldValue.serverTimestamp(),
-                courseImage: getEmbeddedVideoUrl(currentPurchaseCourse.videoLink, true)
-            });
-            
-            closePurchaseForm();
-            showSuccessMessage('Purchase request submitted successfully!');
         }
 
         // --- MY COURSES ---
-        function showMyCourses() {
-            if (!currentUser) { openModal('authModal'); return; }
+        async function showMyCourses() {
+             if (!currentUser) { openModal('authModal'); return; }
             openModal('myCoursesModal');
-            loadMyCourses();
-        }
-        
-        function closeMyCoursesModal() { closeModal('myCoursesModal'); }
-
-        function switchMyCoursesTab(event, filter) {
-            myCoursesFilter = filter;
-            document.querySelector('.my-courses-tab-btn.active').classList.remove('active');
-            event.target.classList.add('active');
-            loadMyCourses();
-        }
-
-        async function loadMyCourses() {
-            if (!currentUser) return;
-            let userCourses = [];
-
-            if (!firebaseInitialized) {
-                let demoUserCourses = JSON.parse(localStorage.getItem('demoUserCourses') || '[]');
-                userCourses = demoUserCourses.filter(c => c.userId === currentUser.uid);
-            } else {
-                const snapshot = await db.collection('userCourses').where('userId', '==', currentUser.uid).orderBy('purchaseDate', 'desc').get();
-                userCourses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            }
-            
-            const filtered = myCoursesFilter === 'all' ? userCourses : userCourses.filter(c => c.status.toLowerCase() === myCoursesFilter);
-            displayMyCourses(filtered);
-        }
-
-        function displayMyCourses(courses) {
             const content = document.getElementById('myCoursesContent');
+            content.innerHTML = '<p>Loading your courses...</p>';
+            const snapshot = await db.collection('userCourses').where('userId', '==', currentUser.uid).orderBy('purchaseDate', 'desc').get();
+            const courses = snapshot.docs.map(doc => doc.data());
+            
             if (courses.length === 0) {
-                content.innerHTML = `<div class="no-courses"><h3>No courses found in this category.</h3><button class="browse-courses-btn" onclick="closeMyCoursesModal()">Browse Courses</button></div>`;
+                content.innerHTML = '<p>You have not purchased any courses yet.</p>';
                 return;
             }
-            content.innerHTML = `<div class="my-courses-grid">${courses.map(c => `
+            content.innerHTML = courses.map(c => {
+                 const courseDetails = allCoursesCache.find(ac => ac.id === c.courseId);
+                 const videoUrl = courseDetails ? getVideoEmbedUrl(courseDetails.videoLink) : '';
+                return `
                 <div class="my-course-card">
                     <div class="my-course-image">
-                        <img src="${c.courseImage || ''}" alt="${c.courseTitle}">
-                        <div class="course-status-badge status-${c.status.toLowerCase()}">${c.status}</div>
+                        <div class="status-badge status-${c.status.toLowerCase()}">${c.status}</div>
                     </div>
-                    <div class="my-course-details">
+                    <div style="padding: 1rem;">
                         <h3>${c.courseTitle}</h3>
-                        <p class="purchase-date">Purchased: ${new Date(c.purchaseDate.seconds * 1000).toLocaleDateString()}</p>
-                        ${ c.status === 'Approved' ? '<button class="access-course-btn"><i class="fas fa-play"></i> Access Course</button>' : 
-                           c.status === 'Pending' ? '<p class="pending-message">Review in progress</p>' :
-                           c.status === 'Rejected' ? '<p class="rejected-message">Purchase rejected</p>' : '' }
+                        <p>Purchased: ${new Date(c.purchaseDate.seconds * 1000).toLocaleDateString()}</p>
+                        ${c.status === 'Approved' ? `<a href="${videoUrl}" target="_blank" class="login-btn buy-btn" style="text-decoration:none; display:inline-block; text-align:center;">Access Course</a>` : ''}
                     </div>
-                </div>`).join('')}</div>`;
+                </div>`;
+            }).join('');
+        }
+        
+        // --- ADMIN PANEL ---
+        function openAdminPanel() {
+            if (!isAdmin) { showNotification("Access Denied.", true); return; }
+            openModal('adminModal');
+            loadAdminCourses(); // Load courses by default
+        }
+        
+        function switchAdminTab(event, tabName) {
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tabName === 'courses') loadAdminCourses();
+            if (tabName === 'requests') loadAdminRequests();
+            if (tabName === 'users') loadAdminUsers();
+        }
+
+        // Admin: Courses
+        async function loadAdminCourses() {
+            const snapshot = await db.collection('courses').orderBy('createdAt', 'desc').get();
+            const courses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            document.getElementById('coursesTableBody').innerHTML = courses.map(c => `
+                <tr>
+                    <td>${c.title}</td><td>$${c.price}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="showCourseForm('${c.id}')"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" onclick="deleteCourse('${c.id}')"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`).join('');
+        }
+
+        function showCourseForm(courseId = null) {
+            const form = document.getElementById('courseForm');
+            form.reset();
+            document.getElementById('courseId').value = '';
+            if (courseId) {
+                const course = allCoursesCache.find(c => c.id === courseId);
+                if (course) {
+                    document.getElementById('courseFormTitle').textContent = 'Edit Course';
+                    document.getElementById('courseId').value = course.id;
+                    document.getElementById('courseTitle').value = course.title;
+                    document.getElementById('courseDescription').value = course.description;
+                    document.getElementById('coursePrice').value = course.price;
+                    document.getElementById('courseVideoLink').value = course.videoLink;
+                }
+            } else {
+                 document.getElementById('courseFormTitle').textContent = 'Add Course';
+            }
+            openModal('courseFormModal');
+        }
+
+        async function saveCourse(event) {
+            event.preventDefault();
+            const courseId = document.getElementById('courseId').value;
+            const courseData = {
+                title: document.getElementById('courseTitle').value,
+                description: document.getElementById('courseDescription').value,
+                price: parseFloat(document.getElementById('coursePrice').value),
+                videoLink: document.getElementById('courseVideoLink').value,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            try {
+                if (courseId) {
+                    await db.collection('courses').doc(courseId).update(courseData);
+                    showNotification("Course updated!");
+                } else {
+                    courseData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('courses').add(courseData);
+                    showNotification("Course added!");
+                }
+                closeModal('courseFormModal');
+                loadAdminCourses();
+                loadFeaturedCourses(); // Refresh main page
+            } catch(e) {
+                console.error("Error saving course:", e);
+                showNotification("Error saving course.", true);
+            }
+        }
+        
+        async function deleteCourse(id) {
+            if (!confirm("Are you sure you want to delete this course?")) return;
+            await db.collection('courses').doc(id).delete();
+            loadAdminCourses();
+            loadFeaturedCourses();
+            showNotification("Course deleted.");
+        }
+
+        // Admin: Requests
+        async function loadAdminRequests() {
+            const snapshot = await db.collection('requests').orderBy('createdAt', 'desc').get();
+            const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            document.getElementById('requestsTableBody').innerHTML = requests.map(r => `
+                <tr>
+                    <td>${r.userName}</td><td>${r.courseTitle}</td>
+                    <td>${new Date(r.createdAt.seconds * 1000).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${r.status.toLowerCase()}">${r.status}</span></td>
+                    <td><button class="action-btn" onclick="viewRequestDetails('${r.id}')"><i class="fas fa-eye"></i></button></td>
+                </tr>`).join('');
+        }
+        
+        async function viewRequestDetails(requestId) {
+            const doc = await db.collection('requests').doc(requestId).get();
+            if (!doc.exists) { showNotification("Request not found.", true); return; }
+            const req = { id: doc.id, ...doc.data() };
+            
+            document.getElementById('requestDetailsBody').innerHTML = `
+                <p><strong>User:</strong> ${req.userName} (${req.userEmail})</p>
+                <p><strong>Course:</strong> ${req.courseTitle}</p>
+                <p><strong>Status:</strong> ${req.status}</p>
+                <p><strong>Screenshot:</strong></p>
+                <img src="${req.screenshotData}" alt="Payment Screenshot" class="screenshot-img">
+            `;
+            document.getElementById('requestDetailsFooter').innerHTML = req.status === 'Pending' ? `
+                <button class="admin-action-btn secondary" onclick="updateRequestStatus('${req.id}', 'Rejected')">Reject</button>
+                <button class="admin-action-btn" style="background:var(--success-color)" onclick="updateRequestStatus('${req.id}', 'Approved')">Approve</button>
+            ` : '';
+            openModal('requestDetailsModal');
+        }
+
+        async function updateRequestStatus(requestId, status) {
+            try {
+                // Update the request itself
+                await db.collection('requests').doc(requestId).update({ status: status });
+                
+                // Find the corresponding userCourse entry and update it
+                const reqDoc = await db.collection('requests').doc(requestId).get();
+                const reqData = reqDoc.data();
+                const userCourseQuery = await db.collection('userCourses').where('userId', '==', reqData.userId).where('courseId', '==', reqData.courseId).where('status', '==', 'Pending').limit(1).get();
+                
+                if (!userCourseQuery.empty) {
+                    const userCourseDocId = userCourseQuery.docs[0].id;
+                    await db.collection('userCourses').doc(userCourseDocId).update({ status: status });
+                }
+                
+                showNotification(`Request has been ${status.toLowerCase()}.`);
+                closeModal('requestDetailsModal');
+                loadAdminRequests();
+            } catch (e) {
+                console.error("Error updating status: ", e);
+                showNotification("Failed to update status.", true);
+            }
+        }
+        
+        // Admin: Users
+        async function loadAdminUsers() {
+             const snapshot = await db.collection('users').get();
+             const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+             document.getElementById('usersTableBody').innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.displayName}</td><td>${u.email}</td><td>${u.isAdmin ? 'Yes' : 'No'}</td>
+                    <td><button class="action-btn admin-status-btn" onclick="toggleAdminStatus('${u.id}', ${!u.isAdmin})"><i class="fas fa-crown"></i></button></td>
+                </tr>`).join('');
+        }
+        
+        async function toggleAdminStatus(userId, makeAdmin) {
+            if (userId === currentUser.uid && !makeAdmin) {
+                if (!confirm("Are you sure you want to remove your own admin status?")) return;
+            }
+            await db.collection('users').doc(userId).update({ isAdmin: makeAdmin });
+            showNotification("Admin status updated.");
+            loadAdminUsers();
         }
 
         // --- UTILITIES ---
@@ -1743,34 +847,6 @@
                 reader.onerror = error => reject(error);
             });
         }
-        
-        function redirectToWhatsApp(type) {
-            const message = type === 'contact' ? 'Hello! I would like to know more about Trade Mastery.' : '';
-            window.open(`https://wa.me/918979873681?text=${encodeURIComponent(message)}`, '_blank');
-        }
-
-        // --- DEMO DATA ---
-        function getDemoUsers() {
-            return [
-                { id: 'demoadmin', uid: 'demoadmin', displayName: 'Demo Admin', email: 'admin@demo.com', photoURL: 'https://randomuser.me/api/portraits/lego/1.jpg', createdAt: { seconds: 1672531200 }, isAdmin: true },
-                { id: 'demouser1', uid: 'demouser1', displayName: 'John Doe', email: 'john@demo.com', photoURL: 'https://randomuser.me/api/portraits/men/2.jpg', createdAt: { seconds: 1675209600 }, isAdmin: false }
-            ];
-        }
-        function getDemoCourses() {
-            return [
-                { id: 'web-dev', title: 'Web Development Masterclass', description: 'Master modern web technologies.', price: 99, videoLink: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', createdAt: new Date() },
-                { id: 'data-sci', title: 'Data Science & ML', description: 'Learn data analysis and algorithms.', price: 129, videoLink: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', createdAt: new Date() }
-            ];
-        }
-        function getDemoRequests() {
-            let requests = JSON.parse(localStorage.getItem('demoRequests') || '[]');
-            if (requests.length === 0) {
-                 requests = [{ id: 'req-1', userName: 'Jane Doe', userEmail: 'jane@demo.com', courseTitle: 'Web Development', status: 'Pending', createdAt: { seconds: 1677628800 }, amountPaid: 7920, screenshotData: 'https://i.imgur.com/L1tCPUn.png' }];
-                 localStorage.setItem('demoRequests', JSON.stringify(requests));
-            }
-            return requests;
-        }
-
     </script>
 </body>
 </html>
